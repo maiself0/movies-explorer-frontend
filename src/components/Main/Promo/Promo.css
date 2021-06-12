@@ -1,0 +1,18 @@
+.promo {
+  height: 493px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #F5F5F5;
+  width: 90vw;
+}
+
+.promo__header {
+  font-size: 50px;
+  line-height: 58px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  max-width: 730px;
+  text-align: center;
+}

@@ -1,0 +1,24 @@
+.navbar__items {
+  display: flex;
+  align-items: center;
+  list-style: none;
+}
+
+.navbar__item {
+  background-color: #e8e8e8;
+  width: 96px;
+  height: 36px;
+  border-radius: 10px;
+  margin-left: 10px;
+  text-align: center;
+  line-height: 36px;
+  /* vertical-align: middlel; */
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.navbar__link {
+  text-decoration: none;
+  color: #FFFFFF;
+
+}
