@@ -7,9 +7,9 @@ const NavTab = () => {
       <nav className="navbar">
 
         <ul className="navbar__items">
-        
-          <a href="./#" className="navbar__link">
-            <li className="navbar__item">О Проекте</li>
+
+          <a href="#about-project" className="navbar__link">
+            <li className="navbar__item">О проекте</li>
           </a>
 
           <a href="./#" className="navbar__link">

@@ -7,10 +7,9 @@
   justify-content: center;
   align-items: center;
   background-color: #F5F5F5;
-  width: 93.95vw;
+  min-width: 93.95vw;
   border-radius: 10px;
 }
-
 
 .promo__header {
   margin: 0;

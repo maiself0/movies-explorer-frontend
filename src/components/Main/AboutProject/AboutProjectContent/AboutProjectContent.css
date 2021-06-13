@@ -1,0 +1,20 @@
+.about-project__content:nth-child(2) {
+  margin-left: 51px;
+}
+
+.about-project__content-header {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+}
+
+.about-project__content-text {
+  padding-top: 6px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  /* or 143% */
+}

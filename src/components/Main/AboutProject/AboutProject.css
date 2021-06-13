@@ -1,0 +1,82 @@
+.about-project {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  height: 608px;
+}
+
+.about-project__container {
+  padding: 70px 65px;
+}
+
+.about-project__content-container {
+  padding-top: 31px;
+  display: flex;
+}
+
+.about-project__heading {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 71px;
+  /* identical to box height */
+  letter-spacing: -0.04em;
+
+  border-bottom: 1px solid black;
+}
+.about-project__timeline {
+  width: 100%;
+  /* max-width: 1140px; */
+}
+
+.grid-container {
+  padding-top: 96px;
+  display: grid;
+  grid-template-columns: 20% 80%;
+  row-gap: 0;
+}
+
+.grid-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  width: 100%;
+}
+
+.grid-item-1 {
+  background-color: #000000;
+}
+.grid-item-2 {
+  background-color: #f2f2f2;
+}
+
+.grid-item-3 {
+}
+.grid-item-4 {
+}
+
+.grid-item__text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+}
+
+.grid-item__text-1 {
+  color: #ffffff;
+}
+
+.grid-item__text-3,
+.grid-item__text-4 {
+  font-family: SuisseIntl-Regular, Arial, sans-serif;;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height, or 121% */
+
+  text-align: center;
+  color: #a0a0a0;
+}
