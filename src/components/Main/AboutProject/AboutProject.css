@@ -1,12 +1,12 @@
 .about-project {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   height: 608px;
 }
 
 .about-project__container {
-  padding: 70px 65px;
+  padding: 70px 70px;
 }
 
 .about-project__content-container {
@@ -24,13 +24,9 @@
 
   border-bottom: 1px solid black;
 }
-.about-project__timeline {
-  width: 100%;
-  /* max-width: 1140px; */
-}
 
 .grid-container {
-  padding-top: 96px;
+
   display: grid;
   grid-template-columns: 20% 80%;
   row-gap: 0;

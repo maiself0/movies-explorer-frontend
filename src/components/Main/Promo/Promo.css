@@ -1,16 +1,18 @@
 .promo {
+  padding: 0 35px;
+  padding-top: 20px;
+}
+
+.promo__container {
   position: relative;
-  margin-top: 20px;
   height: 493px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: #F5F5F5;
-  min-width: 93.95vw;
   border-radius: 10px;
+  background-color: #F5F5F5;
 }
-
 .promo__header {
   margin: 0;
   padding: 0 0 55px 0;

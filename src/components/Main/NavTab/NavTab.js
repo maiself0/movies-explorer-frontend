@@ -12,7 +12,7 @@ const NavTab = () => {
             <li className="navbar__item">О проекте</li>
           </a>
 
-          <a href="./#" className="navbar__link">
+          <a href="#techs" className="navbar__link">
             <li className="navbar__item">Технологии</li>
           </a>
 

@@ -11,10 +11,12 @@
 }
 
 .about-project__content-text {
+  margin: 0;
+  padding: 0;
   padding-top: 6px;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 20px;
-  /* or 143% */
+  height: 150px;
 }
