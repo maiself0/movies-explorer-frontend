@@ -45,21 +45,20 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  padding-left: 70px;
 }
 
 .about-me__content-img {
   max-width: 270px;
   width: 100%;
 }
+
 .about-me__content-header {
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
   line-height: 58px;
-  /* identical to box height, or 116% */
-
   letter-spacing: -0.04em;
-
   margin: 0;
 }
 
@@ -97,4 +96,8 @@
   font-weight: 500;
   font-size: 14px;
   line-height: 17px;
+}
+
+.about-me__link:hover {
+  opacity: 0.5;
 }

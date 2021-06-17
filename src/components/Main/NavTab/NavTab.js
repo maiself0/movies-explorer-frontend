@@ -16,7 +16,7 @@ const NavTab = () => {
             <li className="navbar__item">Технологии</li>
           </a>
 
-          <a href="./#" className="navbar__link">
+          <a href="#about-me" className="navbar__link">
             <li className="navbar__item">Студент</li>
           </a>
         </ul>

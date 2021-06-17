@@ -21,6 +21,10 @@
   margin-left: 10px;
 }
 
+.navbar__link:hover {
+  opacity: 0.5;
+}
+
 .navbar__link:first-child {
   margin-left: 0;
 }

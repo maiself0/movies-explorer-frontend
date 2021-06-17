@@ -4,7 +4,7 @@ import aboutMePhoto from '../../../images/aboutme.png'
 
 const AboutMe = () => {
   return (
-    <div className="about-me">
+    <div className="about-me" id="about-me">
       <div className="about-me__container">
         <div className="about-me__header-container">
           <h2 className="about-me__header">Студент</h2>
