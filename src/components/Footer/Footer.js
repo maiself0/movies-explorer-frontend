@@ -17,9 +17,21 @@ const Footer = () => {
           <p className="footer__date">© {date.getFullYear()}</p>
 
           <ul className="footer__links">
-            <li className="footer__link">Яндекс.Практикум</li>
-            <li className="footer__link">Github</li>
-            <li className="footer__link">Facebook</li>
+            <li className="footer__link-container">
+              <a className="footer__link" href="https://praktikum.yandex.ru/">
+                Яндекс.Практикум
+              </a>
+            </li>
+            <li className="footer__link-container">
+              <a className="footer__link" href="https://github.com">
+                Github
+              </a>
+            </li>
+            <li className="footer__link-container">
+              <a className="footer__link" href="https://facebook.com">
+                Facebook
+              </a>
+            </li>
           </ul>
         </div>
       </div>

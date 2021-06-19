@@ -2,3 +2,9 @@
   height: 74px;
   background-color: #FFFFFF;
 }
+
+.header__container {
+  padding: 18px 70px 0 70px;
+  display: flex;
+  justify-content: space-between;
+}
