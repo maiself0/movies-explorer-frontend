@@ -109,3 +109,9 @@
 .register__signin-link:hover {
   opacity: 0.5;
 }
+
+@media all and (max-width: 800px) {
+  .register__container {
+    padding: 230px 0;
+  }
+}

@@ -14,7 +14,7 @@ const Login = () => {
 
         <form className="login__form">
           <div className="login__inputs-containter">
-            <label for="email" className="login__label">
+            <label htmlFor="email" className="login__label">
               E-mail
             </label>
             <input
@@ -26,7 +26,7 @@ const Login = () => {
             />
             <span className="email-error error"></span>
 
-            <label for="password" className="login__label">
+            <label htmlFor="password" className="login__label">
               Пароль
             </label>
             <input

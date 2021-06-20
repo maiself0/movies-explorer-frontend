@@ -101,3 +101,38 @@
 .about-me__link:hover {
   opacity: 0.5;
 }
+
+@media all and (max-width: 800px) {
+  .about-me__container {
+    padding: 0 50px;
+  }
+  .about-me__header-container {
+    height: 140px;
+  }
+  .about-me__content-header {
+    margin-top: 90px;
+    font-size: 40px;
+    line-height: 40px;
+  }
+  .about-me__content-subheader {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__content-text {
+    font-size: 12px;
+    line-height: 18px;
+  }
+  .about-me__content-left {
+    height: 350px;
+    max-width: 300px;
+  }
+  .about-me__links {
+    margin-top: 69px;
+  }
+  .about-me__content-container {
+    height: 429px;
+  }
+  .about-me__content-img {
+    max-width: 255px;
+  }
+}

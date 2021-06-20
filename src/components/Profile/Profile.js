@@ -12,14 +12,14 @@ const Profile = (props) => {
 
           <form className="profile__form">
             <div className="profile__input-container">
-              <label for="name" className="profile__input-label">Имя</label>
+              <label htmlFor="name" className="profile__input-label">Имя</label>
               <input name="name" placeholder={props.userName} className="profile__input"></input>
             </div>
 
             <hr className="profile__line" />
             
             <div className="profile__input-container">
-              <label for="name" className="profile__input-label">Почта</label>
+              <label htmlFor="name" className="profile__input-label">Почта</label>
               <input name="name" placeholder={props.email} className="profile__input"></input>
             </div>
 

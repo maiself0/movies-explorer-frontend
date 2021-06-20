@@ -6,7 +6,7 @@
 }
 
 .about-project__container {
-  padding: 70px 70px;
+  padding: 70px 70px 0;
 }
 
 .about-project__content-container {
@@ -21,12 +21,10 @@
   line-height: 71px;
   /* identical to box height */
   letter-spacing: -0.04em;
-
   border-bottom: 1px solid black;
 }
 
 .grid-container {
-
   display: grid;
   grid-template-columns: 20% 80%;
   row-gap: 0;
@@ -47,11 +45,6 @@
   background-color: #f2f2f2;
 }
 
-.grid-item-3 {
-}
-.grid-item-4 {
-}
-
 .grid-item__text {
   font-style: normal;
   font-weight: normal;
@@ -66,13 +59,20 @@
 
 .grid-item__text-3,
 .grid-item__text-4 {
-  font-family: SuisseIntl-Regular, Arial, sans-serif;;
+  font-family: SuisseIntl-Regular, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
   line-height: 17px;
-  /* identical to box height, or 121% */
-
   text-align: center;
   color: #a0a0a0;
+}
+
+@media all and (max-width: 800px) {
+  .about-project__container {
+    padding: 30px 50px;
+  }
+  .about-project {
+    height: 565px;
+  }
 }

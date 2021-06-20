@@ -4,6 +4,13 @@
   background: #fdfdfd;
   box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.08);
 }
+
+.movies-card__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .movies-card__header-container {
   display: flex;
   align-items: center;
@@ -29,7 +36,6 @@
 }
 
 .movies-card__bookmark-button {
-  background-image: url(../../../images/bookmarkOff.svg);
   background-repeat: no-repeat;
   background-position: center;
   width: 30px;
@@ -37,23 +43,35 @@
   color: none;
   border: none;
   outline: none;
-  background-color: #FDFDFD;
+  background-color: #fdfdfd;
   margin-right: 14px;
 }
 
-.movies-card__bookmark-button:hover {
+.movies-card__bookmark-button_type_bookmark {
+  background-image: url(../../../images/bookmarkOff.svg);
+}
+
+.movies-card__bookmark-button_type_bookmark:hover {
   opacity: 0.5;
   background-image: url(../../../images/bookmarkOn.svg);
 }
 
-.movies-card__bookmark-button:focus {
+.movies-card__bookmark-button_type_bookmark:focus {
   background-image: url(../../../images/bookmarkOn.svg);
   outline: none;
 }
+
 .movies-card__bookmark-button:hover:focus {
   opacity: 1;
 }
 
+.movies-card__bookmark-button_type_delete {
+  background-image: url(../../../images/delete.svg);
+}
+
+.movies-card__bookmark-button_type_delete:hover {
+  opacity: 0.4;
+}
 .movies-card__image {
   width: 100%;
   height: 100%;

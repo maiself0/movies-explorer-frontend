@@ -23,7 +23,6 @@
   font-size: 22px;
   line-height: 27px;
   /* identical to box height */
-
   letter-spacing: -0.04em;
 }
 
@@ -91,4 +90,30 @@
 }
 .techs__techs-name:last-child {
   margin-right: 0;
+}
+
+@media all and (max-width: 800px) {
+  .techs {
+    height: 565px;
+  }
+  .techs__container {
+    padding: 0 50px;
+  }
+  .techs__heading-container {
+    height: 140px;
+  }
+  
+  .techs__heading {
+    margin-top: 0;
+    margin-bottom: 25px;
+  }
+  .techs__content-container {
+    height: 284px;
+  }
+  .techs__content-container-text {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 20px 0 0 0;
+  }
+  
 }

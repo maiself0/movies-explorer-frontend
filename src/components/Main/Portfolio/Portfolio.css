@@ -61,3 +61,22 @@
 
   letter-spacing: -0.04em;
 }
+
+@media all and (max-width: 800px) {
+  .portfolio__container {
+    padding: 0 50px;
+  }
+  .portfolio {
+    height: 425px;
+  }
+  .portfolio__link-container {
+    height: 90px;
+  }
+  .portfolio__links-container {
+    margin-top: 50px;
+  }
+  .portfolio__link-text {
+    font-size: 28px;
+    line-height: 50px;
+  }
+}

@@ -8,8 +8,7 @@
 
 .movies-card-list__grid-container {
   display: grid;
-  grid-template-columns: repeat(3, 364px);
-  grid-template-rows: 271px;
+  grid-template-columns: repeat(3, minmax(200px, 364px));
   grid-column-gap: 24px;
   grid-row-gap: 30px;
 }
@@ -32,4 +31,13 @@
   line-height: 15px;
   background: #f9f9f9;
   border-radius: 6px;
+}
+
+@media all and (max-width: 800px) {
+  .movies-card-list__grid-container {
+    grid-template-columns: repeat(2, 339px);
+    grid-template-rows: 271px;
+    grid-column-gap: 24px;
+    grid-row-gap: 30px;
+  }
 }

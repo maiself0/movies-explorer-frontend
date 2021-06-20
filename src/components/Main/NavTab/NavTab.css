@@ -39,3 +39,10 @@
   font-weight: 500;
   font-size: 12px;
 }
+
+
+@media all and (max-width: 800px) {
+  .navbar {
+    bottom: 3.6%;
+  }
+}

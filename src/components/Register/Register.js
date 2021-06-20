@@ -14,13 +14,13 @@ const Register = () => {
 
         <form className="register__form">
           <div className="register__inputs-containter">
-            <label for="name" className="register__label">
+            <label htmlFor="name" className="register__label">
               Имя
             </label>
             <input name="name" id="name" className="register__input" required />
             <span className="name-error error"></span>
 
-            <label for="email" className="register__label">
+            <label htmlFor="email" className="register__label">
               E-mail
             </label>
             <input
@@ -32,7 +32,7 @@ const Register = () => {
             />
             <span className="email-error error"></span>
 
-            <label for="password" className="register__label">
+            <label htmlFor="password" className="register__label">
               Пароль
             </label>
             <input
