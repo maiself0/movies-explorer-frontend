@@ -1,5 +1,6 @@
 .navigation {
-  margin: 3px 0;
+  margin: 10px 0;
+  display: flex;
 }
 
 .navigation__link {
@@ -9,17 +10,20 @@
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
-  line-height: 16px;
+  line-height: 25px;
+  position: relative;
+  display: block;
+  height: 25px;
 }
 
 .navigation__link:hover {
-  opacity: 0.1;
+  opacity: 0.4;
 }
 
 .navigation__link-button {
   width: 76px;
   background-color: black;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   border: none;
   height: 32px;
@@ -28,4 +32,24 @@
 
 .navigation__link:last-child {
   margin-right: 0;
+}
+
+.navigation__link_loggedin {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+}
+
+.navigation__link_account {
+  align-items: center;
+  background-image: url(../../../images/account.svg);
+  background-repeat: no-repeat;
+  background-position: top 100% right 100%;
+  width: 100px;
+}
+
+
+.navigation__link_active {
+  font-weight: 500;
 }
