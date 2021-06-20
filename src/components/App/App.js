@@ -4,10 +4,10 @@ import Main from '../Main/Main';
 import { Route, Switch } from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
-import Movies from '../Movies/Movies'
-import SavedMovies from '../SavedMovies/SavedMovies'
-import PageNotFound from '../PageNotFound/PageNotFound'
-
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
+import PageNotFound from '../PageNotFound/PageNotFound';
 
 function App() {
   return (
@@ -32,8 +32,10 @@ function App() {
         <Route path="/saved-movies">
           <SavedMovies />
         </Route>
-        
-        <Route path="/profile"></Route>
+
+        <Route path="/profile">
+          <Profile userName="Виталий" email="pochta@yandex.ru"/>
+        </Route>
 
         <Route path="/*">
           <PageNotFound />
