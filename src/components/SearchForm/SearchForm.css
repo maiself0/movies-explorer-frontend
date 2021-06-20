@@ -1,7 +1,7 @@
 .search-form {
   display: flex;
   justify-content: center;
-  padding: 70px 70px 60px 70px;
+  padding: 60px 70px 60px 70px;
 }
 
 .search-form__container {
@@ -16,6 +16,7 @@
 }
 
 .search-form__icon {
+  margin-top: 10px;
   margin-left: 7px;
   background-image: url(../../images/icon.svg);
   background-repeat: no-repeat;
@@ -26,6 +27,7 @@
 .search-form__input {
   margin-left: 35px;
   margin-top: 10px;
+  margin-bottom: 10px;
   outline: none;
   border: none;
   height: 34px;
@@ -42,6 +44,7 @@
 }
 
 .search-form__button {
+  margin-top: 10px;
   background: #000000;
   border-radius: 48px;
   font-style: normal;
