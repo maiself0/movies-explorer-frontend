@@ -61,3 +61,7 @@
   width: 58.65px;
   height: 34px;
 }
+.search-form__button:hover {
+  cursor: pointer;
+  opacity: 0.8;
+}
