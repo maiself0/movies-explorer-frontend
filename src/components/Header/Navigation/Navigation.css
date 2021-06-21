@@ -103,7 +103,7 @@
     position: absolute;
     top: 90vh;
   }
-  .navigation__link_hamburger_clicked_active {
+  .navigation__link_hamburger {
     text-decoration: underline;
   }
 

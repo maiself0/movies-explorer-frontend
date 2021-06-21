@@ -33,7 +33,7 @@ const Navigation = () => {
 
         <Link
           to="/" exact
-          activeClassName="navigation__link_active navigation__link_hamburger_clicked_active"
+          activeClassName="navigation__link_active navigation__link_hamburger"
           className={`navigation__link ${isMenuOpened===true ? "navigation__link_hamburger_clicked" : ""} navigation__link_loggedin navigation__link_main`}
         >
           Главная
@@ -41,7 +41,7 @@ const Navigation = () => {
 
         <NavLink
           to="/movies"
-          activeClassName="navigation__link_active navigation__link_hamburger_clicked_active"
+          activeClassName="navigation__link_active navigation__link_hamburger"
           className={`navigation__link ${isMenuOpened===true ? "navigation__link_hamburger_clicked" : ""} navigation__link_loggedin navigation__link_movies`}
         >
           Фильмы
@@ -49,7 +49,7 @@ const Navigation = () => {
 
         <NavLink
           to="/saved-movies"
-          activeClassName="navigation__link_active navigation__link_hamburger_clicked_active"
+          activeClassName="navigation__link_active navigation__link_hamburger"
           className={`navigation__link ${isMenuOpened===true ? "navigation__link_hamburger_clicked" : ""} navigation__link_loggedin navigation__link_saved-movies`}
         >
           Сохранённые фильмы
