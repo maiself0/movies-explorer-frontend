@@ -50,3 +50,9 @@
   font-size: 14px;
   line-height: 18px;
 }
+
+@media all and (max-width: 800px) {
+  .filter-checkbox__input {
+    margin-left: 10px;
+  }
+}

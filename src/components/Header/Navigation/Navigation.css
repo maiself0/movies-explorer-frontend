@@ -61,22 +61,27 @@
   .navigation__link_main {
     display: flex;
   }
+  .navigation {
+    margin: 0;
+  }
 
   .navigation__hamburger {
-    background: url(../../../images/hamburger.svg) no-repeat center;
+    background: url(../../../images/hamburger.svg) no-repeat;
+    background-position: top;
     width: 44px;
     height: 44px;
+    cursor: pointer;
   }
 
   .navigation__hamburger_hamburger_clicked {
     background: url(../../../images/exit.svg) no-repeat center;
     position: absolute;
-    right: 20px;
-    top: 10px;
+    right: 15px;
+    top: 15px;
   }
 
   .navigation_hamburger_clicked {
-    padding-top: 159px;
+    padding-top: 160px;
     margin: 0;
     position: fixed;
     display: flex;
@@ -87,24 +92,37 @@
     z-index: 100;
     left: 0;
     top: 0;
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.5) 32.3%, #FFFFFF 32.3%);;
-  } 
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.5) 32.3%,
+      #ffffff 32.3%
+    );
+  }
 
   .navigation__link_loggedin {
     display: none;
-    margin-left: 32.3%;
+    margin-left: 36.3%;
   }
 
   .navigation__link_hamburger_clicked {
     display: flex;
+    margin-bottom: 27px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    /* identical to box height */
+    text-align: center;
   }
 
   .navigation__link_hamburger_clicked:last-child {
     position: absolute;
-    top: 90vh;
+    font-size: 12px;
+    line-height: 25px;
+    top: 88.5vh;
+    margin-left: 32.3%;
   }
   .navigation__link_hamburger {
     text-decoration: underline;
   }
-
 }

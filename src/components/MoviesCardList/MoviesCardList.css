@@ -34,9 +34,15 @@
 }
 
 @media all and (max-width: 800px) {
+  .movies-card-list {
+    padding: 30px 0 15px 0;
+  }
   .movies-card-list__grid-container {
     grid-template-columns: repeat(2, minmax(200px, 339px));
     grid-column-gap: 24px;
-    grid-row-gap: 30px;
+    grid-row-gap: 40px;
+  }
+  .movies-card-list__button-more-container {
+    padding-top: 80px;
   }
 }

@@ -28,11 +28,11 @@ const MoviesCardList = () => {
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image6}/>
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image7}/>
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image8}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image9}/>
+          {/* <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image9}/>
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image10}/>
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image11}/>
           <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image12}/>
-          
+           */}
         </div>
 
         <div className="movies-card-list__button-more-container">

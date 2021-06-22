@@ -85,3 +85,16 @@
   color: #ff4062;
   font-weight: 500;
 }
+
+@media all and (max-width: 800px) {
+  .profile {
+    padding-top: 235px;
+  }
+  .profile__form {
+    margin-top: 103px;
+  }
+  .profile__buttons-container {
+    margin-top: 179px;
+  }
+  
+}

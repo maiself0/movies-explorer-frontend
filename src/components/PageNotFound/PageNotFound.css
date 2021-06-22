@@ -54,3 +54,10 @@
 .page-not-found__link:hover {
   opacity: 0.5;
 }
+
+@media all and (max-width: 800px) {
+  .page-not-found__container {
+    margin-top: 200px;
+  }
+  
+}

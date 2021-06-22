@@ -65,3 +65,10 @@
   cursor: pointer;
   opacity: 0.8;
 }
+
+
+@media all and (max-width: 800px) {
+  .search-form {
+    padding: 75px 30px 60px 30px;
+  }
+}
