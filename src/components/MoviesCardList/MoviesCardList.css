@@ -33,6 +33,12 @@
   border-radius: 6px;
 }
 
+.movie-card-list__button-more:hover {
+  opacity: 0.1;
+  background: #6b5fdb50;
+  cursor: pointer;
+}
+
 @media all and (max-width: 800px) {
   .movies-card-list {
     padding: 30px 0 15px 0;

@@ -32,8 +32,7 @@ const Navigation = () => {
         <div className={`navigation__hamburger ${isMenuOpened===true ? 'navigation__hamburger_hamburger_clicked' : '' }`} onClick={handleHamburgerClick}/> 
 
         <Link
-          to="/" exact
-          activeClassName="navigation__link_active navigation__link_hamburger"
+          to="/"
           className={`navigation__link ${isMenuOpened===true ? "navigation__link_hamburger_clicked" : ""} navigation__link_loggedin navigation__link_main`}
         >
           Главная
