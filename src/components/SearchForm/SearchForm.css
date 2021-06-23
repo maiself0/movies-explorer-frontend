@@ -72,3 +72,27 @@
     padding: 75px 30px 60px 30px;
   }
 }
+
+@media all and (max-width: 510px) {
+  .search-form {
+    padding: 85px 17px 47px 17px;
+  }
+  .search-form__icon {
+    display: none;
+  }
+  
+  .search-form__input {
+    margin-left: 0;
+    outline: none;
+    border: none;
+ 
+  }
+  .search-form__input::placeholder {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  .search-form__button {
+    margin-bottom: 5px;
+  }
+}

@@ -115,3 +115,34 @@
     padding: 230px 0;
   }
 }
+
+@media all and (max-width: 510px) {
+  .register__container {
+    padding: 55px 0;
+    max-width: 256px;
+    width: 100%;
+  }
+  .register__header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .register__header {
+    margin-top: 46px;;
+  }
+  .register__form {
+    margin-top: 46px;
+  }
+  .register__button-container {
+    margin-top: 159px;
+  }
+  .register__button {
+    font-size: 12px;
+  }
+  .register__button-subtext {
+    font-size: 12px;
+  }
+  .register__signin-link {
+    font-size: 12px;
+  }
+}

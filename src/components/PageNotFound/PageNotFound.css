@@ -20,7 +20,6 @@
   text-align: center;
   margin: 0 0 10px 0;
   color: #000000;
-
 }
 
 .page-not-found__text {
@@ -39,7 +38,6 @@
 }
 
 .page-not-found__link {
-  
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -59,5 +57,24 @@
   .page-not-found__container {
     margin-top: 200px;
   }
-  
+}
+
+@media all and (max-width: 510px) {
+  .page-not-found__container {
+    margin-top: 200px;
+  }
+  .page-not-found__header {
+    font-size: 80px;
+    line-height: 80px;
+  }
+  .page-not-found__text {
+    font-size: 12px;
+    margin-top: 15px;
+  }
+
+  .page-not-found__link {
+    position: absolute;
+    bottom: 3vh;
+    font-size: 12px;
+  }
 }

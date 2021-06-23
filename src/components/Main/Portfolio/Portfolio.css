@@ -57,8 +57,6 @@
   font-weight: normal;
   font-size: 30px;
   line-height: 90px;
-  /* identical to box height, or 167% */
-
   letter-spacing: -0.04em;
 }
 
@@ -67,7 +65,7 @@
     padding: 0 50px;
   }
   .portfolio {
-    height: 425px;
+    height: 365px;
   }
   .portfolio__link-container {
     height: 90px;
@@ -79,4 +77,28 @@
     font-size: 28px;
     line-height: 50px;
   }
+}
+@media all and (max-width: 510px) {
+  .portfolio {
+    margin-top: 360px;
+  }
+
+  .portfollio__header {
+    font-size: 14px;
+  }
+  .portfolio__container {
+    padding: 0 17px;
+  }
+  .portfolio__links-container {
+    margin-top: 30px;
+  }
+  .portfolio__link-container {
+    height: 60px;
+  }
+  .portfolio__link-text {
+    font-size: 18px;
+    line-height: 60px;
+    background-image: url(../../../images/portfolioLinkS.svg);
+  }
+  
 }

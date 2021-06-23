@@ -59,7 +59,7 @@
 
 .grid-item__text-3,
 .grid-item__text-4 {
-  font-family: SuisseIntl-Regular, Arial, sans-serif;
+  font-family: SuisseIntl-Regular, Inter, Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -75,4 +75,31 @@
   .about-project {
     height: 565px;
   }
+}
+
+@media all and (max-width: 400px) {
+  .about-project__container {
+    padding: 14px 17px 0;
+  }
+  .about-project__heading {
+    font-size: 18px;
+    line-height: 77px;
+  }
+  .about-project__content-container {
+    padding-top: 25px;
+    flex-direction: column;
+    margin-bottom: 23px;
+  }
+  .grid-item__text {
+    font-size: 12px;
+    line-height: 13px;
+  }
+  .grid-item__text-3,
+  .grid-item__text-4 {
+    font-size: 11px;
+  }
+  .grid-container {
+    grid-template-columns: 35% 65%;
+  }
+  
 }

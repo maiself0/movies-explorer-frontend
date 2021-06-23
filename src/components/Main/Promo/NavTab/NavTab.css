@@ -15,7 +15,7 @@
 
 .navbar__link {
   text-decoration: none;
-  color: #FFFFFF;
+  color: #ffffff;
   width: 96px;
   height: 36px;
   margin-left: 10px;
@@ -40,9 +40,27 @@
   font-size: 12px;
 }
 
-
 @media all and (max-width: 800px) {
   .navbar {
     bottom: 3.6%;
+  }
+}
+
+@media all and (max-width: 400px) {
+  .navbar {
+    bottom: 3.3%;
+  }
+
+  .navbar__link {
+    width: 82px;
+    height: 26px;
+    margin-left: 5px;
+  }
+  .navbar__item {
+    width: 82px;
+    height: 26px;
+    line-height: 26px;
+    font-size: 10px;
+
   }
 }

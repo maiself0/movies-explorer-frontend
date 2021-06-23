@@ -42,3 +42,18 @@
     letter-spacing: -0.04em;
   }
 }
+
+@media all and (max-width: 400px) {
+  .promo {
+    padding: 13px 15px;
+  }
+  .promo__header {
+    margin-top: 10px;
+    font-size: 29px;
+    line-height: 37px;
+  }
+  .promo__container {
+    padding-top: 10px;
+    height: 579px;
+  }
+}

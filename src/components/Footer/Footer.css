@@ -78,3 +78,36 @@
     padding: 0 35px;
   }
 }
+
+@media all and (max-width: 400px) {
+  .footer__header {
+    font-size: 12px;
+  }
+  .footer__content-container {
+    display: flex;
+    justify-content: center;
+  }
+  .footer__container {
+    padding: 30px 17px;
+  }
+  .footer__header-container {
+    height: 50px;
+
+  }
+  .footer__links {
+    flex-direction: column;
+    align-items: center;
+  }
+  .footer__link-container {
+    margin: 0;
+    margin-bottom: 10px;
+  }
+  .footer__link {
+    text-align: center;
+  }
+  
+  .footer__date {
+    position: absolute;
+    margin-top: 120px;
+  }
+}

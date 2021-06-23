@@ -136,3 +136,43 @@
     max-width: 255px;
   }
 }
+
+@media all and (max-width: 510px) {
+  .about-me__container {
+    padding: 40px 17px;
+  }
+  .about-me__header {
+    font-size: 18px;
+    line-height: 46px;
+  }
+  .about-me__content-header {
+    margin-top: 827px;
+    font-size: 30px;
+  }
+
+  .about-me__content-subheader {
+    font-size: 11px;
+  }
+
+  .about-me__content-text {
+    font-size: 11px;
+  }
+  .about-me__content-container {
+    position: relative;
+    flex-direction: column;
+    height: auto;
+  }
+  .about-me__content-right {
+    position: absolute;
+    top: 60px;
+    left: 55%;
+    padding-left: 0;
+    transform: translateX(-50%);
+  }
+  .about-me__content-img {
+    min-width: 292px;
+  }
+  .about-me__links {
+    margin-top: 20px;
+  }
+}

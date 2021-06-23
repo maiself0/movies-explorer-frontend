@@ -96,5 +96,24 @@
   .profile__buttons-container {
     margin-top: 179px;
   }
-  
+}
+
+@media all and (max-width: 510px) {
+  .profile {
+    padding-top: 72px;
+  }
+  .profile__container {
+    max-width: 260px;
+  }
+  .profile__form {
+    margin-top: 78px;
+  }
+  .profile__buttons-container {
+    position: absolute;
+    bottom: 4vh;
+
+  }
+  .profile__button {
+    font-size: 12px;
+  }
 }

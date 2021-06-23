@@ -56,3 +56,14 @@
     margin-left: 10px;
   }
 }
+
+@media all and (max-width: 510px) {
+  .filter-checkbox {
+    padding: 40px 0 40px 0;
+  }
+  .filter-checkbox__label {
+    font-size: 11px;
+  }
+}
+
+

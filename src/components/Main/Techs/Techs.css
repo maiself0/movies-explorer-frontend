@@ -56,7 +56,7 @@
   font-size: 14px;
   line-height: 20px;
   /* or 143% */
-  
+
   text-align: center;
   letter-spacing: -0.04em;
 }
@@ -102,7 +102,7 @@
   .techs__heading-container {
     height: 140px;
   }
-  
+
   .techs__heading {
     margin-top: 0;
     margin-bottom: 25px;
@@ -115,5 +115,35 @@
     line-height: 18px;
     margin: 20px 0 0 0;
   }
-  
+}
+
+@media all and (max-width: 400px) {
+  .techs {
+    background: #ffffff;
+    height: 651px;
+  }
+  .techs__heading {
+    font-size: 18px;
+  }
+  .techs__content-container-heading {
+    font-size: 30px;
+  }
+  .techs__content-container-text {
+    font-size: 11px;
+  }
+  .techs__container {
+    padding: 40px 17px;
+  }
+  .techs__content-container {
+    height: 205px;
+  }
+  .techs__content-container-text {
+    margin: 13px 0 0 0;
+  }
+  .techs__techs-container {
+    display: grid;
+    grid-template-columns: repeat(2, 84px);
+    grid-template-rows: 57px;
+    gap: 10px;
+  }
 }
