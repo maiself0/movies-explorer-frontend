@@ -1,0 +1,138 @@
+.login {
+  display: flex;
+  justify-content: center;
+}
+
+.login__container {
+  padding: 70px 0;
+  max-width: 396px;
+  width: 100%;
+}
+
+.login__header-container {
+  height: 147px;
+}
+
+.login__header {
+  margin-top: 40px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+}
+
+.login__inputs-containter {
+  height: 267px;
+}
+
+.login__label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #a0a0a0;
+}
+
+.login__input {
+  margin: 10px 0 10px 0;
+  height: 46px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  padding: 15px;
+}
+
+.login__button-container {
+  margin-top: 69px;
+}
+
+.login__button {
+  width: 100%;
+  background: #000000;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #ffffff;
+  height: 45px;
+}
+
+.login__button-subtext-container {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.login__button-subtext {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+  margin: 0;
+  margin-right: 6px;
+  text-align: center;
+
+  color: #a0a0a0;
+}
+
+.login__signin-link {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  /* identical to box height */
+
+  text-align: center;
+
+  color: #000000;
+  text-decoration: none;
+}
+
+.login__signin-link:hover {
+  opacity: 0.5;
+}
+
+@media all and (max-width: 800px) {
+  .login__container {
+    padding: 230px 0;
+  }
+}
+@media all and (max-width: 510px) {
+  .login__container {
+    padding: 55px 0;
+    max-width: 256px;
+    width: 100%;
+  }
+  .login__header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .login__header {
+    margin-top: 46px;
+  }
+  .login__form {
+    margin-top: 46px;
+  }
+  .login__button-container {
+    margin-top: 159px;
+  }
+  .login__button {
+    font-size: 12px;
+  }
+  .login__button-subtext {
+    font-size: 12px;
+  }
+  .login__signin-link {
+    font-size: 12px;
+  }
+}
