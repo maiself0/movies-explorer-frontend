@@ -8,10 +8,11 @@ const MoviesCardList = (props) => {
     <div className="movies-card-list">
       <div className="movies-card-list__container">
         {props.isSearching && <Preloader />}
+        {props.moviesNotFound && <span className="error">Ничего не найдено</span>}
 
         <div className="movies-card-list__grid-container">
 
-          {props.movies?.map((movie) => {
+          {props.movies.map((movie) => {
             return <MoviesCard movie={movie} key={movie.id} />;
           })}
         </div>

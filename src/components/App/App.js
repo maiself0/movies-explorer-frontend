@@ -9,12 +9,12 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as moviesApi from '../../utils/MoviesApi';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [movies, setMovies] = useState([]);
-
+  const [moviesNotFound, setMoviesNotFound] = useState(false)
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
@@ -23,14 +23,21 @@ function App() {
       );
     });
     setMovies(searchedMovies);
-    return searchedMovies;
+
+    if(searchedMovies.length === 0) {
+      setMoviesNotFound(true)
+    } 
+    // return searchedMovies;
   };
 
   const handleSearchQuerySubmit = (searchQuery) => {
     setIsSearching(true);
+    setMoviesNotFound(false)
+    setMovies([]);
+
     moviesApi
       .getMovies()
-      .then((movies) => {
+      .then((movies) => {  
       localStorage.setItem('movies', JSON.stringify(movies));
       const moviesAll = JSON.parse(localStorage.getItem('movies'));
       handleMoviesSearch(moviesAll, searchQuery);
@@ -59,6 +66,7 @@ function App() {
             onSearchQuerySubmit={handleSearchQuerySubmit}
             isSearching={isSearching}
             movies={movies}
+            moviesNotFound={moviesNotFound}
           />
         </Route>
 

@@ -6,6 +6,13 @@
   padding: 20px 70px 15px 70px;
 }
 
+.movies-card-list__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .movies-card-list__grid-container {
   display: grid;
   grid-template-columns: repeat(3, minmax(200px, 364px));
