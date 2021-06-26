@@ -145,4 +145,12 @@
   .register__signin-link {
     font-size: 12px;
   }
+  .error {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 9px;
+  
+    color: #ff4062;
+  }
 }

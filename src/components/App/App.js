@@ -8,8 +8,37 @@ import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
+import * as moviesApi from '../../utils/MoviesApi';
+import { useState } from 'react';
 
 function App() {
+  const [isSearching, setIsSearching] = useState(false);
+  const [movies, setMovies] = useState([]);
+
+
+  const handleMoviesSearch = (movies, searchQuery) => {
+    const searchedMovies = movies.filter((movie) => {
+      return (
+        movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) 
+      );
+    });
+    setMovies(searchedMovies);
+    return searchedMovies;
+  };
+
+  const handleSearchQuerySubmit = (searchQuery) => {
+    setIsSearching(true);
+    moviesApi
+      .getMovies()
+      .then((movies) => {
+      localStorage.setItem('movies', JSON.stringify(movies));
+      const moviesAll = JSON.parse(localStorage.getItem('movies'));
+      handleMoviesSearch(moviesAll, searchQuery);
+    })
+      .catch(err => console.log(err))
+      .finally(() => setIsSearching(false))
+  };
+
   return (
     <div className="App">
       <Switch>
@@ -26,7 +55,11 @@ function App() {
         </Route>
 
         <Route path="/movies">
-          <Movies />
+          <Movies
+            onSearchQuerySubmit={handleSearchQuerySubmit}
+            isSearching={isSearching}
+            movies={movies}
+          />
         </Route>
 
         <Route path="/saved-movies">
@@ -34,7 +67,7 @@ function App() {
         </Route>
 
         <Route path="/profile">
-          <Profile userName="Виталий" email="pochta@yandex.ru"/>
+          <Profile userName="Виталий" email="pochta@yandex.ru" />
         </Route>
 
         <Route path="/*">
