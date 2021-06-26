@@ -4,14 +4,15 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader'
 
 
-const Movies = (props) => {
+const Movies = () => {
   return (
-    <div className="movies">
+    <div>
       <Header />
-      <SearchForm onSearchQuerySubmit={props.onSearchQuerySubmit}/>
-      <MoviesCardList isSearching={props.isSearching} movies={props.movies}/>
+      <SearchForm />
+      <MoviesCardList />
       <Footer />
     </div>
   );
