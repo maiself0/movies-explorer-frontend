@@ -8,7 +8,7 @@ const MoviesCardList = (props) => {
     <div className="movies-card-list">
       <div className="movies-card-list__container">
         {props.isSearching && <Preloader />}
-        {props.moviesNotFound && <span className="error">Ничего не найдено</span>}
+        {props.moviesNotFound && <span className="movies-card-list__error">Ничего не найдено</span>}
 
         <div className="movies-card-list__grid-container">
 

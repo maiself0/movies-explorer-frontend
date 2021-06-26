@@ -46,6 +46,10 @@
   cursor: pointer;
 }
 
+.movies-card-list__error {
+  color: red;
+}
+
 @media all and (max-width: 800px) {
   .movies-card-list {
     padding: 30px 13px 15px 13px;

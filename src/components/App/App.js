@@ -13,37 +13,42 @@ import { useEffect, useState } from 'react';
 
 function App() {
   const [isSearching, setIsSearching] = useState(false);
+  const [localStorageMovies, setLocalStorageMovies] = useState([]);
   const [movies, setMovies] = useState([]);
-  const [moviesNotFound, setMoviesNotFound] = useState(false)
+  const [moviesNotFound, setMoviesNotFound] = useState(false);
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
-      return (
-        movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase()) 
-      );
+      return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
     });
     setMovies(searchedMovies);
 
-    if(searchedMovies.length === 0) {
-      setMoviesNotFound(true)
-    } 
+    if (searchedMovies.length === 0) {
+      setMoviesNotFound(true);
+    }
     // return searchedMovies;
   };
 
   const handleSearchQuerySubmit = (searchQuery) => {
     setIsSearching(true);
-    setMoviesNotFound(false)
+    setMoviesNotFound(false);
     setMovies([]);
 
-    moviesApi
-      .getMovies()
-      .then((movies) => {  
-      localStorage.setItem('movies', JSON.stringify(movies));
-      const moviesAll = JSON.parse(localStorage.getItem('movies'));
-      handleMoviesSearch(moviesAll, searchQuery);
-    })
-      .catch(err => console.log(err))
-      .finally(() => setIsSearching(false))
+    if (localStorageMovies.length === 0) {
+      moviesApi
+        .getMovies()
+        .then((movies) => {
+          localStorage.setItem('movies', JSON.stringify(movies));
+          const allMovies = JSON.parse(localStorage.getItem('movies'));
+          setLocalStorageMovies(allMovies)
+          handleMoviesSearch(allMovies, searchQuery);
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setIsSearching(false));
+    } else {
+      handleMoviesSearch(localStorageMovies, searchQuery);
+      setIsSearching(false);
+    }
   };
 
   return (
