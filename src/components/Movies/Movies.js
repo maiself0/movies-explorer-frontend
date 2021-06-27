@@ -11,7 +11,7 @@ const Movies = (props) => {
     <div className="movies">
       <Header />
       <SearchForm onSearchQuerySubmit={props.onSearchQuerySubmit}/>
-      <MoviesCardList isSearching={props.isSearching} movies={props.movies} moviesNotFound={props.moviesNotFound}/>
+      <MoviesCardList isSearching={props.isSearching} searchedMovies={props.searchedMovies} moviesError={props.moviesError}/>
       <Footer />
     </div>
   );

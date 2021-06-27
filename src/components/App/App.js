@@ -14,25 +14,25 @@ import { useEffect, useState } from 'react';
 function App() {
   const [isSearching, setIsSearching] = useState(false);
   const [localStorageMovies, setLocalStorageMovies] = useState([]);
-  const [movies, setMovies] = useState([]);
-  const [moviesNotFound, setMoviesNotFound] = useState(false);
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [moviesError, setMoviesError] = useState(false);
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
     });
-    setMovies(searchedMovies);
+    setSearchedMovies(searchedMovies);
 
     if (searchedMovies.length === 0) {
-      setMoviesNotFound(true);
+      setMoviesError('Ничего не найдено');
     }
     // return searchedMovies;
   };
 
   const handleSearchQuerySubmit = (searchQuery) => {
     setIsSearching(true);
-    setMoviesNotFound(false);
-    setMovies([]);
+    setMoviesError(false);
+    setSearchedMovies([]);
 
     if (localStorageMovies.length === 0) {
       moviesApi
@@ -40,10 +40,15 @@ function App() {
         .then((movies) => {
           localStorage.setItem('movies', JSON.stringify(movies));
           const allMovies = JSON.parse(localStorage.getItem('movies'));
-          setLocalStorageMovies(allMovies)
+          setLocalStorageMovies(allMovies);
           handleMoviesSearch(allMovies, searchQuery);
         })
-        .catch((err) => console.log(err))
+        .catch((err) => {
+          console.log(err);
+          setMoviesError(
+            'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз'
+          );
+        })
         .finally(() => setIsSearching(false));
     } else {
       handleMoviesSearch(localStorageMovies, searchQuery);
@@ -70,8 +75,8 @@ function App() {
           <Movies
             onSearchQuerySubmit={handleSearchQuerySubmit}
             isSearching={isSearching}
-            movies={movies}
-            moviesNotFound={moviesNotFound}
+            searchedMovies={searchedMovies}
+            moviesError={moviesError}
           />
         </Route>
 

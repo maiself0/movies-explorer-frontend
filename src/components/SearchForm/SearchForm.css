@@ -15,7 +15,8 @@
   padding-bottom: 3px;
 }
 
-.search-form__input-container:focus {
+.search-form__input-container:hover {
+  /* background-color: rgb(51, 15, 214); */
 }
 
 .search-form__icon {

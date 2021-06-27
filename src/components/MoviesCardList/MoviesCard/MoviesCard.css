@@ -79,6 +79,8 @@
   height: 100%;
   height: 203px;
   object-fit: contain;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media all and (max-width: 510px) {
