@@ -1,7 +1,7 @@
 import './App.css';
 // import Preloader from '../Preloader/Preloader';
 import Main from '../Main/Main';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation } from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
@@ -9,24 +9,46 @@ import SavedMovies from '../SavedMovies/SavedMovies';
 import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as moviesApi from '../../utils/MoviesApi';
+import Api from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
 
 function App() {
+  // фильмы
   const [isSearching, setIsSearching] = useState(false);
   const [localStorageMovies, setLocalStorageMovies] = useState([]);
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [moviesError, setMoviesError] = useState(false);
+  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQ4YzUyYzJhZDUwYzBiNDY3MTczOTAiLCJpYXQiOjE2MjQ4MTkwMDgsImV4cCI6MTYyNTQyMzgwOH0.ftQr6VHI86lOHdTMJ8JmevCb--Q-Fd9nHJwytyBXyvE')
+
+  const [savedMovies, setSavedMovies] = useState([])
+
+  const api = new Api({
+    url: "https://api.bukhgolts.nomoredomains.club",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${token}`
+    }
+  })
+  
+  const location = useLocation();
+
+  useEffect(() => {
+    api
+      .getBookmarkedMovies()
+        .then((bookmarkedMovies) => {
+            setSavedMovies(bookmarkedMovies);
+        })
+  }, [location]);
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
     });
-    setSearchedMovies(searchedMovies);
 
     if (searchedMovies.length === 0) {
       setMoviesError('Ничего не найдено');
     }
-    // return searchedMovies;
+    return searchedMovies;
   };
 
   const handleSearchQuerySubmit = (searchQuery) => {
@@ -41,7 +63,8 @@ function App() {
           localStorage.setItem('movies', JSON.stringify(movies));
           const allMovies = JSON.parse(localStorage.getItem('movies'));
           setLocalStorageMovies(allMovies);
-          handleMoviesSearch(allMovies, searchQuery);
+          const searchedMovies = handleMoviesSearch(allMovies, searchQuery);
+          setSearchedMovies(searchedMovies);
         })
         .catch((err) => {
           console.log(err);
@@ -51,10 +74,29 @@ function App() {
         })
         .finally(() => setIsSearching(false));
     } else {
-      handleMoviesSearch(localStorageMovies, searchQuery);
+      const searchedMovies = handleMoviesSearch(localStorageMovies, searchQuery);
+      setSearchedMovies(searchedMovies);
       setIsSearching(false);
     }
   };
+
+  const handleBookmarkMovieButtonClick = (movie) => {
+    api
+      .addMovie(movie)
+        .then((addedMovie) => {
+          setSavedMovies([...savedMovies, addedMovie])
+
+        })
+        .catch((err) => console.log(err))
+  }
+
+  const handleDeleteMovie = (movieId) => {
+    api
+      .deleteMovie(movieId)
+      .then((res) => {
+        console.log(res);
+      })
+  }
 
   return (
     <div className="App">
@@ -75,13 +117,17 @@ function App() {
           <Movies
             onSearchQuerySubmit={handleSearchQuerySubmit}
             isSearching={isSearching}
-            searchedMovies={searchedMovies}
+            movies={searchedMovies}
             moviesError={moviesError}
+            onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
+            onDeleteMovie={handleDeleteMovie}
           />
         </Route>
 
         <Route path="/saved-movies">
-          <SavedMovies />
+          <SavedMovies 
+            movies={savedMovies}
+          />
         </Route>
 
         <Route path="/profile">

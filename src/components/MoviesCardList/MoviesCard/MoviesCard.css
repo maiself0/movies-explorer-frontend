@@ -57,13 +57,13 @@
   background-image: url(../../../images/bookmarkOn.svg);
 }
 
-.movies-card__bookmark-button_type_bookmark:focus {
+.movies-card__bookmark-button_active {
   background-image: url(../../../images/bookmarkOn.svg);
   outline: none;
 }
 
-.movies-card__bookmark-button:hover:focus {
-  opacity: 1;
+.movies-card__bookmark-button_active:hover {
+  opacity: .61;
 }
 
 .movies-card__bookmark-button_type_delete {
