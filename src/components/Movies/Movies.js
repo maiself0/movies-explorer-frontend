@@ -11,7 +11,9 @@ const Movies = (props) => {
       <Header />
       <SearchForm 
         onSearchQuerySubmit={props.onSearchQuerySubmit} 
-        setIsShortMoviesChecked={props.setIsShortMoviesChecked}/>
+        setIsShortMoviesChecked={props.setIsShortMoviesChecked}
+      />
+
       <MoviesCardList
         isSearching={props.isSearching}
         movies={props.movies}
@@ -20,6 +22,7 @@ const Movies = (props) => {
         onDeleteMovie={props.onDeleteMovie}
         savedMovies={props.savedMovies}
       />
+      
       <Footer />
     </div>
   );

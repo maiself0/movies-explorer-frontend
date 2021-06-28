@@ -46,13 +46,11 @@ const MoviesCard = (props) => {
   }
 
   const handleActiveBookmarkButtonClick = () => {
-
       setIsBookmarked(false);
       props.onDeleteMovie(savedMovie._id)    
   }
 
   const handleDeleteMovieButtonClick = () => {
-    console.log(props.movie._id)
     props.onDeleteMovie(props.movie._id)
     setIsBookmarked(false);
   }

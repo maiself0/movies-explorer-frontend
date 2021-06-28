@@ -6,14 +6,24 @@ import Preloader from '../Preloader/Preloader';
 
 const MoviesCardList = (props) => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [numberOfMoviesShown, setNumberOfMoviesShown] = useState(0);
+  const [numberOfMoviesShown, setNumberOfMoviesShown] = useState(() => {
+    const windowSize = window.innerWidth;
+    if (windowSize < 510) {
+      return 5;
+    } else if (windowSize < 800) {
+      return 8;
+    } else {
+      return 12;
+    }
+  });
+  
   const [moviesShown, setMoviesShown] = useState([]);
   const [numberOfMoviesToAdd, setNumberOfMoviesToAdd] = useState(0);
   const [isMoreMoviesButtonActive, setIsMoreMoviesButtonActive] =
     useState(false);
 
   const location = useLocation();
-  
+
   const handleWindowResize = () => {
     setWindowWidth(window.innerWidth);
   };
@@ -56,10 +66,7 @@ const MoviesCardList = (props) => {
       props.movies.slice(0, moviesShown.length + numberOfMoviesToAdd)
     );
 
-    if (
-      moviesShown.length >=
-      props.movies.length - numberOfMoviesToAdd
-    ) {
+    if (moviesShown.length >= props.movies.length - numberOfMoviesToAdd) {
       setIsMoreMoviesButtonActive(false);
     }
   };
