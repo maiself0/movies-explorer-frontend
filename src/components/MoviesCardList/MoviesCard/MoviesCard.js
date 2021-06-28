@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom'
 
@@ -20,10 +20,18 @@ const MoviesCard = (props) => {
     nameEN: props.movie.nameEN || 'н.д.',
 }
 
+  const savedMovie = props.savedMovies?.find((movie) => movie.movieId === props.movie.id)
+
+  useEffect(() => {
+      if(savedMovie) {
+        setIsBookmarked(true)
+      }
+
+  }, [savedMovie])
+
 
   const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
-  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.formats.thumbnail.url}` : props.movie.thumbnail
-
+  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.formats.thumbnail.url}` : props.movie.thumbnail 
 
   const minutesToHoursConverter = (duration) => {
     const hours = Math.floor(duration / 60);
@@ -38,10 +46,19 @@ const MoviesCard = (props) => {
   }
 
   const handleActiveBookmarkButtonClick = () => {
-    setIsBookmarked(false);
-    props.onDeleteMovie('60d8c7af2ad50c0b46717391')
+
+      setIsBookmarked(false);
+      props.onDeleteMovie(savedMovie._id)    
   }
 
+  const handleDeleteMovieButtonClick = () => {
+    console.log(props.movie._id)
+    props.onDeleteMovie(props.movie._id)
+    setIsBookmarked(false);
+  }
+
+  const toggleBookmark = isBookmarked ? handleActiveBookmarkButtonClick : handleBookmarkButtonClick
+  const chooseDeleteOrBookmarkButtonClick = location.pathname === '/movies' ? toggleBookmark : handleDeleteMovieButtonClick
 
   return (
     <div className="movies-card">
@@ -54,7 +71,7 @@ const MoviesCard = (props) => {
           </div>
           <button 
             type="button"
-            onClick={isBookmarked ? handleActiveBookmarkButtonClick : handleBookmarkButtonClick} 
+            onClick={chooseDeleteOrBookmarkButtonClick} 
             className={`movies-card__bookmark-button ${movieButton} ${isBookmarked ? 'movies-card__bookmark-button_active' : ''}`} 
 
           />

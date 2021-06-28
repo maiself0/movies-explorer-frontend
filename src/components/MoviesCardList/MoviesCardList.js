@@ -43,9 +43,9 @@ const MoviesCardList = (props) => {
   }, [windowWidth]);
 
   useEffect(() => {
-    setMoviesShown(props.movies.slice(0, numberOfMoviesShown));
+    setMoviesShown(props.movies?.slice(0, numberOfMoviesShown));
 
-    props.movies.length <= numberOfMoviesShown
+    props.movies?.length <= numberOfMoviesShown
       ? setIsMoreMoviesButtonActive(false)
       : setIsMoreMoviesButtonActive(true);
   }, [props.movies]);
@@ -74,13 +74,13 @@ const MoviesCardList = (props) => {
 
         <div className="movies-card-list__grid-container">
           {moviesShown?.map((movie) => {
-            console.log(movie)
             return (
               <MoviesCard
                 movie={movie}
                 key={location.pathname === '/movies' ? movie.id : movie._id}
                 onBookmarkMovieButtonClick={props.onBookmarkMovieButtonClick}
                 onDeleteMovie={props.onDeleteMovie}
+                savedMovies={props.savedMovies}
               />
             );
           })}

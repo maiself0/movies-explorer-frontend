@@ -13,7 +13,6 @@ const SearchForm = (props) => {
 
   const handleMoviesApiQuery = (e) => {
     e.preventDefault();
-
     props.onSearchQuerySubmit(searchQuery);
   }
 
@@ -42,7 +41,7 @@ const SearchForm = (props) => {
         {!isSearchQueryValid && <span className="search-form__error error">Нужно ввести ключевое слово</span>}
         </div>
         
-        <FilterCheckbox />
+        <FilterCheckbox setIsShortMoviesChecked={props.setIsShortMoviesChecked}/>
       </form>
     </div>
   );

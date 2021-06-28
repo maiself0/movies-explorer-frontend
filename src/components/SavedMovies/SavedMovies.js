@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './SavedMovies.css';
 import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
@@ -9,8 +9,16 @@ const SavedMovies = (props) => {
   return (
     <div>
       <Header />
-      <SearchForm />
-      <MoviesCardList movies={props.movies} />
+      <SearchForm 
+        onSearchQuerySubmit={props.onSearchQuerySubmit}  
+        setIsShortMoviesChecked={props.setIsShortMoviesChecked}/>
+      <MoviesCardList 
+        isSearching={props.isSearching}
+        movies={props.movies} 
+        moviesError={props.moviesError}
+        onDeleteMovie={props.onDeleteMovie}
+        savedMovies={props.savedMovies}
+      />
       <Footer />
     </div>
   );
