@@ -32,9 +32,10 @@ function App() {
   //   url: "https://api.bukhgolts.nomoredomains.club",
   //   headers: {
   //     "content-type": "application/json",
-  //     authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQ4YzUyYzJhZDUwYzBiNDY3MTczOTAiLCJpYXQiOjE2MjQ4MTkwMDgsImV4cCI6MTYyNTQyMzgwOH0.ftQr6VHI86lOHdTMJ8JmevCb--Q-Fd9nHJwytyBXyvE`
+  //     authorization: `Bearer ${process.env.REACT_APP_TOKEN}`
   //   }
   // })
+
   const api = new Api({
     url: "https://api.bukhgolts.nomoredomains.club",
     headers: {
@@ -50,7 +51,7 @@ function App() {
     setSearchedMovies([])
     setSavedMovies(localStorageSavedMovies)
 
-    if (localStorageSavedMovies.length === 0) {
+    if (isLoggedIn && localStorageSavedMovies.length === 0) {
       api
         .getBookmarkedMovies()
           .then((bookmarkedMovies) => {
