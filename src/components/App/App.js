@@ -19,8 +19,6 @@ function App() {
   const [localStorageMovies, setLocalStorageMovies] = useState([]);
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [moviesError, setMoviesError] = useState(false);
-  const [token, setToken] = useState('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQ4YzUyYzJhZDUwYzBiNDY3MTczOTAiLCJpYXQiOjE2MjQ4MTkwMDgsImV4cCI6MTYyNTQyMzgwOH0.ftQr6VHI86lOHdTMJ8JmevCb--Q-Fd9nHJwytyBXyvE')
-
   const [savedMovies, setSavedMovies] = useState([])
   const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
   const [currentUser, setCurrentUser] = useState({
@@ -30,6 +28,13 @@ function App() {
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"))
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+  // const api = new Api({
+  //   url: "https://api.bukhgolts.nomoredomains.club",
+  //   headers: {
+  //     "content-type": "application/json",
+  //     authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGQ4YzUyYzJhZDUwYzBiNDY3MTczOTAiLCJpYXQiOjE2MjQ4MTkwMDgsImV4cCI6MTYyNTQyMzgwOH0.ftQr6VHI86lOHdTMJ8JmevCb--Q-Fd9nHJwytyBXyvE`
+  //   }
+  // })
   const api = new Api({
     url: "https://api.bukhgolts.nomoredomains.club",
     headers: {
@@ -43,6 +48,7 @@ function App() {
   useEffect(() => {
     setMoviesError(false);
     setSearchedMovies([])
+    setSavedMovies(localStorageSavedMovies)
 
     if (localStorageSavedMovies.length === 0) {
       api
@@ -89,10 +95,11 @@ function App() {
       moviesApi
         .getMovies()
         .then((movies) => {
+          const sortApiMoviesOnShortMoviesChecked = isShortMoviesChecked ? sortShortMovies(movies) : movies
           localStorage.setItem('movies', JSON.stringify(movies));
           const allMovies = JSON.parse(localStorage.getItem('movies'));
           setLocalStorageMovies(allMovies);
-          const searchedMovies = handleMoviesSearch(sortMoviesOnShortMoviesChecked, searchQuery);
+          const searchedMovies = handleMoviesSearch(sortApiMoviesOnShortMoviesChecked, searchQuery);
           setSearchedMovies(searchedMovies);
         })
         .catch((err) => {
@@ -202,7 +209,10 @@ function App() {
     localStorage.clear()
     setCurrentUser({})
     setSavedMovies([])
+    setLocalStorageMovies([])
+    setLocalStorageSavedMovies([])
     history.push('/')
+    setJwt("")
     setIsLoggedIn(false)
   }
 
