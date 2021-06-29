@@ -1,7 +1,7 @@
 import './App.css';
 // import Preloader from '../Preloader/Preloader';
 import Main from '../Main/Main';
-import { Route, Switch, useLocation } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
@@ -11,6 +11,7 @@ import PageNotFound from '../PageNotFound/PageNotFound';
 import * as moviesApi from '../../utils/MoviesApi';
 import Api from '../../utils/MainApi';
 import { useEffect, useState } from 'react';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
   // фильмы
@@ -22,24 +23,22 @@ function App() {
 
   const [savedMovies, setSavedMovies] = useState([])
   const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
-
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    email: '',
+  });
+  const [jwt, setJwt] = useState(localStorage.getItem("jwt"))
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const api = new Api({
     url: "https://api.bukhgolts.nomoredomains.club",
     headers: {
       "content-type": "application/json",
-      authorization: `Bearer ${token}`
+      authorization: `Bearer ${jwt}`
     }
   })
   
   const location = useLocation();
-
-
-  useEffect(() => {
-    localStorage.clear()
-    setLocalStorageSavedMovies([])
-    setSavedMovies([])
-  }, [])
 
   useEffect(() => {
     setMoviesError(false);
@@ -60,7 +59,7 @@ function App() {
       // setSavedMovies(localStorageSavedMovies)
       setSearchedMovies([])
     }
-  }, [location]);
+  }, [isLoggedIn, location]);
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
@@ -137,55 +136,126 @@ function App() {
       .catch((err) => console.log(err))
   }
 
+  const [apiError, setApiError] = useState('')
+
+  const history = useHistory();
+
+  const handleRegister = ({ name, email, password }) => {
+    api
+      .register(name, email, password)
+        .then((response) => {
+          if (response) {
+            handleLogin(email, password)
+          }
+        })
+        .catch((err => {
+          setApiError("Что-то пошло не так")
+          console.log(err)
+        }))
+  }
+
+  const handleLogin = (email, password) => {
+    api
+      .login(email, password)
+      .then((data) => {
+        history.push('/movies');
+        setIsLoggedIn(true);
+        setJwt(data);
+        setApiError('')
+
+      })
+      .catch((err => {
+        setApiError("Что-то пошло не так")
+        console.log(err)
+      }))
+  }
+  const [isAuthChecking, setIsAuthChecking] = useState(false)
+
+  useEffect(() => {
+    const token = localStorage.getItem("jwt");
+    if(token) {
+        api.getUserData(token)
+          .then((res) => {
+            if (res) {
+              setCurrentUser(res)
+              history.push("/movies");
+              setIsLoggedIn(true);
+            }
+          }).catch((err) => console.log(err))
+          .finally(() => setIsAuthChecking(false));
+
+        
+        api.getBookmarkedMovies()
+          .then((bookmarkedMovies) => {
+              setSavedMovies(bookmarkedMovies);
+              localStorage.setItem('localStorageSavedMovies', JSON.stringify(bookmarkedMovies));
+              const localMovies = JSON.parse(localStorage.getItem('localStorageSavedMovies'))
+              setLocalStorageSavedMovies(localMovies);
+              setSearchedMovies([])
+          })
+          .catch((err) => console.log(err))
+
+      }
+  }, [isLoggedIn]);
+
+  const handleLogout = () => {
+    localStorage.clear()
+    setCurrentUser({})
+    setSavedMovies([])
+    history.push('/')
+    setIsLoggedIn(false)
+  }
 
   return (
     <div className="App">
-      <Switch>
-        <Route path="/" exact>
-          <Main />
-        </Route>
+      <CurrentUserContext.Provider value={currentUser}>
+        <Switch>
+          <Route path="/" exact>
+            <Main isLoggedIn={isLoggedIn} />
+          </Route>
 
-        <Route path="/signup">
-          <Register />
-        </Route>
+          <Route path="/signup">
+            <Register onRegister={handleRegister} apiError={apiError} />
+          </Route>
 
-        <Route path="/signin">
-          <Login />
-        </Route>
+          <Route path="/signin">
+            <Login onLogin={handleLogin} apiError={apiError} />
+          </Route>
 
-        <Route path="/movies">
-          <Movies
-            onSearchQuerySubmit={handleSearchQuerySubmit}
-            isSearching={isSearching}
-            movies={searchedMovies}
-            moviesError={moviesError}
-            onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
-            onDeleteMovie={handleDeleteMovie}
-            savedMovies={savedMovies}
-            setIsShortMoviesChecked={setIsShortMoviesChecked}
-          />
-        </Route>
+          <Route path="/movies">
+            <Movies
+              onSearchQuerySubmit={handleSearchQuerySubmit}
+              isSearching={isSearching}
+              movies={searchedMovies}
+              moviesError={moviesError}
+              onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
+              onDeleteMovie={handleDeleteMovie}
+              savedMovies={savedMovies}
+              setIsShortMoviesChecked={setIsShortMoviesChecked}
+            />
+          </Route>
 
-        <Route path="/saved-movies">
-          <SavedMovies 
-            onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
-            isSearching={isSearching}
-            movies={savedMovies}
-            moviesError={moviesError}
-            onDeleteMovie={handleDeleteMovie}
-            savedMovies={savedMovies}
-            setIsShortMoviesChecked={setIsShortMoviesChecked}
-          />
-        </Route>
+          <Route path="/saved-movies">
+            <SavedMovies
+              onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
+              isSearching={isSearching}
+              movies={savedMovies}
+              moviesError={moviesError}
+              onDeleteMovie={handleDeleteMovie}
+              savedMovies={savedMovies}
+              setIsShortMoviesChecked={setIsShortMoviesChecked}
+            />
+          </Route>
 
-        <Route path="/profile">
-          <Profile userName="Виталий" email="pochta@yandex.ru" />
-        </Route>
+          <Route path="/profile">
+            <Profile onLogout={handleLogout}/>
+          </Route>
 
-        <Route path="/*">
-          <PageNotFound />
-        </Route>
-      </Switch>
+          <Route path="/*">
+            <PageNotFound />
+          </Route>
+        </Switch>
+      </CurrentUserContext.Provider>
     </div>
   );
 }

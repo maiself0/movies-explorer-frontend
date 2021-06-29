@@ -26,6 +26,7 @@
 }
 
 .profile__input-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -45,6 +46,7 @@
 }
 
 .profile__input {
+
   border: none;
   outline: none;
   background-color: transparent;
@@ -85,7 +87,12 @@
   color: #ff4062;
   font-weight: 500;
 }
-
+.profile__name-error,
+.profile__email-error {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 @media all and (max-width: 800px) {
   .profile {
     padding-top: 235px;

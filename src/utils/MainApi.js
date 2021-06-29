@@ -11,7 +11,6 @@ class Api {
     this._headers = config.headers;
   }
 
-
   getBookmarkedMovies() {
     return fetch(`${this._url}/movies`, {
       method: 'GET',
@@ -45,5 +44,46 @@ class Api {
       headers: this._headers,
     }).then(onError);
   }
+
+  register(name, email, password) {
+    return fetch(`${this._url}/signup`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({name, email, password})
+    })
+    .then(onError)
+  };
+
+  login(email, password) {
+    return fetch(`${this._url}/signin`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then(onError)
+      .then((token) => {
+        if (token) {
+          localStorage.setItem("jwt", token);
+          return token;
+        } else {
+          return;
+        }
+      });
+  };
+
+  getUserData(token) {
+    return fetch(`${this._url}/users/me`, {
+        method: 'GET',
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${token}`
+        },
+      }).then(onError);
+    }
+
 }
 export default Api;
