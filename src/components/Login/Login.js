@@ -3,8 +3,9 @@ import './Login.css';
 import Logo from '../Logo/Logo';
 import { Link } from 'react-router-dom';
 import useFormValidation from '../../hooks/useFormValidation';
+import Preloader from '../Preloader/Preloader';
 
-const Login = ({ onLogin, apiError }) => {
+const Login = ({ onLogin, apiError, isAuthChecking }) => {
   const { values, handleChange, errors, isValid, resetForm } =
     useFormValidation();
 
@@ -14,9 +15,13 @@ const Login = ({ onLogin, apiError }) => {
     resetForm();
   };
 
+  if (isAuthChecking) {
+    return (<Preloader />)
+  } else {
   return (
     <div className="login">
       <div className="login__container">
+      {isAuthChecking && <Preloader />}
         <div className="login__header-container">
           <Logo />
           <h1 className="login__header">Рады видеть!</h1>
@@ -73,7 +78,7 @@ const Login = ({ onLogin, apiError }) => {
         </form>
       </div>
     </div>
-  );
+  );}
 };
 
 export default Login;

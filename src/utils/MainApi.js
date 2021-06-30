@@ -85,5 +85,16 @@ class Api {
       }).then(onError);
     }
 
+  updateProfile(name, email) {
+    return fetch(`${this._url}/users/me`, {
+        method: "PATCH",
+        headers: this._headers,
+        body: JSON.stringify({
+          name: name,
+          email: email,
+         }),
+    }).then(onError);
+  }
+
 }
 export default Api;

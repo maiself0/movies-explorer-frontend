@@ -16,7 +16,6 @@
   font-size: 24px;
   line-height: 29px;
   /* identical to box height */
-
   text-align: center;
 }
 
@@ -24,6 +23,24 @@
   width: 100%;
   margin-top: 123px;
 }
+
+.profile__api-message {
+  font-weight: bolder;
+  text-align: center;
+  font-size: 27px;
+  line-height: 30px;
+  height: 30px;
+}
+
+.profile__response_error {
+  color: red;
+}
+
+.profile__response_success {
+  color: green;
+  background-color: none;
+}
+
 
 .profile__input-container {
   position: relative;
@@ -46,7 +63,6 @@
 }
 
 .profile__input {
-
   border: none;
   outline: none;
   background-color: transparent;
@@ -60,6 +76,7 @@
 
 .profile__input::placeholder {
   color: #000000;
+  opacity: 0.5;
 }
 
 .profile__buttons-container {

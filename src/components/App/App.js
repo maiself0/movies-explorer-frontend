@@ -1,7 +1,7 @@
 import './App.css';
-// import Preloader from '../Preloader/Preloader';
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import Main from '../Main/Main';
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory, Redirect } from 'react-router-dom';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import Movies from '../Movies/Movies';
@@ -28,13 +28,6 @@ function App() {
   const [jwt, setJwt] = useState(localStorage.getItem("jwt"))
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // const api = new Api({
-  //   url: "https://api.bukhgolts.nomoredomains.club",
-  //   headers: {
-  //     "content-type": "application/json",
-  //     authorization: `Bearer ${process.env.REACT_APP_TOKEN}`
-  //   }
-  // })
 
   const api = new Api({
     url: "https://api.bukhgolts.nomoredomains.club",
@@ -50,6 +43,7 @@ function App() {
     setMoviesError(false);
     setSearchedMovies([])
     setSavedMovies(localStorageSavedMovies)
+    setApiResponse(false)
 
     if (isLoggedIn && localStorageSavedMovies.length === 0) {
       api
@@ -63,7 +57,6 @@ function App() {
           })
           .catch((err) => console.log(err))
     } else {
-      // setSavedMovies(localStorageSavedMovies)
       setSearchedMovies([])
     }
   }, [isLoggedIn, location]);
@@ -144,11 +137,12 @@ function App() {
       .catch((err) => console.log(err))
   }
 
-  const [apiError, setApiError] = useState('')
-
+  const [apiResponse, setApiResponse] = useState('')
+  const [isAuthChecking, setIsAuthChecking] = useState(false)
   const history = useHistory();
 
   const handleRegister = ({ name, email, password }) => {
+    setIsAuthChecking(true)
     api
       .register(name, email, password)
         .then((response) => {
@@ -157,27 +151,30 @@ function App() {
           }
         })
         .catch((err => {
-          setApiError("Что-то пошло не так")
+          setApiResponse("Что-то пошло не так")
           console.log(err)
         }))
+        .finally(() => setIsAuthChecking(false))
   }
 
   const handleLogin = (email, password) => {
+    setIsAuthChecking(true)
     api
       .login(email, password)
       .then((data) => {
         history.push('/movies');
         setIsLoggedIn(true);
         setJwt(data);
-        setApiError('')
+        setApiResponse('')
 
       })
       .catch((err => {
-        setApiError("Что-то пошло не так")
+        setApiResponse("Что-то пошло не так")
         console.log(err)
       }))
+      .finally(() => setIsAuthChecking(false))
   }
-  const [isAuthChecking, setIsAuthChecking] = useState(false)
+
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
@@ -186,7 +183,7 @@ function App() {
           .then((res) => {
             if (res) {
               setCurrentUser(res)
-              history.push("/movies");
+
               setIsLoggedIn(true);
             }
           }).catch((err) => console.log(err))
@@ -205,6 +202,25 @@ function App() {
 
       }
   }, [isLoggedIn]);
+
+  
+
+  const handleUpdateUser = (name, email) => {
+    setIsAuthChecking(true)
+    api.updateProfile(name, email)
+      .then((updatedProfile) => {
+        setCurrentUser(updatedProfile)
+        setApiResponse('изменения успешно применены')
+      })
+      .catch((err) => {
+        console.log(err)
+        setApiResponse('изменить профиль не получилось')
+      })
+      .finally(() => setIsAuthChecking(false))
+
+  }
+
+  console.log(isLoggedIn)
 
   const handleLogout = () => {
     localStorage.clear()
@@ -226,27 +242,42 @@ function App() {
           </Route>
 
           <Route path="/signup">
-            <Register onRegister={handleRegister} apiError={apiError} />
+          {isLoggedIn ? <Redirect to="/"/> : 
+            <Register
+                onRegister={handleRegister}
+                apiResponse={apiResponse}
+                isAuthChecking={isAuthChecking}
+              />
+          }
           </Route>
+
 
           <Route path="/signin">
-            <Login onLogin={handleLogin} apiError={apiError} />
-          </Route>
-
-          <Route path="/movies">
-            <Movies
-              onSearchQuerySubmit={handleSearchQuerySubmit}
-              isSearching={isSearching}
-              movies={searchedMovies}
-              moviesError={moviesError}
-              onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
-              onDeleteMovie={handleDeleteMovie}
-              savedMovies={savedMovies}
-              setIsShortMoviesChecked={setIsShortMoviesChecked}
+          {isLoggedIn ? <Redirect to="/"/> : 
+            <Login
+              onLogin={handleLogin}
+              apiResponse={apiResponse}
+              isAuthChecking={isAuthChecking}
             />
+          }
           </Route>
 
-          <Route path="/saved-movies">
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/movies">
+
+              <Movies
+                onSearchQuerySubmit={handleSearchQuerySubmit}
+                isSearching={isSearching}
+                movies={searchedMovies}
+                moviesError={moviesError}
+                onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
+                onDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+                setIsShortMoviesChecked={setIsShortMoviesChecked}
+              />
+          </ProtectedRoute>
+
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
+
             <SavedMovies
               onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
               isSearching={isSearching}
@@ -256,11 +287,17 @@ function App() {
               savedMovies={savedMovies}
               setIsShortMoviesChecked={setIsShortMoviesChecked}
             />
-          </Route>
+          </ProtectedRoute>
 
-          <Route path="/profile">
-            <Profile onLogout={handleLogout}/>
-          </Route>
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/profile">
+  
+            <Profile
+              onLogout={handleLogout}
+              onUpdateUser={handleUpdateUser}
+              apiResponse={apiResponse}
+              isAuthChecking={isAuthChecking}
+            />
+          </ProtectedRoute>
 
           <Route path="/*">
             <PageNotFound />
