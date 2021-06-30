@@ -220,7 +220,6 @@ function App() {
 
   }
 
-  console.log(isLoggedIn)
 
   const handleLogout = () => {
     localStorage.clear()

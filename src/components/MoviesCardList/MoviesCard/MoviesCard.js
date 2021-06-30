@@ -39,7 +39,6 @@ const MoviesCard = (props) => {
     return `${hours > 0 ? hours + "ч " : ""}${minutes}м`;
   };
 
-
   const handleBookmarkButtonClick = () => {
     props.onBookmarkMovieButtonClick(movie);
     setIsBookmarked(true);
@@ -75,12 +74,13 @@ const MoviesCard = (props) => {
           />
         </div>
 
-
-        <img
-          className="movies-card__image"
-          alt="кадр из фильма"
-          src={imageSource}
-        />
+        <a href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer}>
+          <img
+            className="movies-card__image"
+            alt="кадр из фильма"
+            src={imageSource}
+          />
+        </a>
       </div>
     </div>
   );
