@@ -74,7 +74,7 @@ const MoviesCard = (props) => {
           />
         </div>
 
-        <a href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer}>
+        <a href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer} rel="noreferrer" target="_blank" >
           <img
             className="movies-card__image"
             alt="кадр из фильма"
