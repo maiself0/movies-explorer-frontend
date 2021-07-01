@@ -39,27 +39,6 @@ function App() {
   
   const location = useLocation();
 
-  useEffect(() => {
-    setMoviesError(false);
-    setSearchedMovies([])
-    setSavedMovies(localStorageSavedMovies)
-    setApiResponse(false)
-
-    if (isLoggedIn && localStorageSavedMovies.length === 0) {
-      api
-        .getBookmarkedMovies()
-          .then((bookmarkedMovies) => {
-              setSavedMovies(bookmarkedMovies);
-              localStorage.setItem('localStorageSavedMovies', JSON.stringify(bookmarkedMovies));
-              const localMovies = JSON.parse(localStorage.getItem('localStorageSavedMovies'))
-              setLocalStorageSavedMovies(localMovies);
-              setSearchedMovies([])
-          })
-          .catch((err) => console.log(err))
-    } else {
-      setSearchedMovies([])
-    }
-  }, [isLoggedIn, location]);
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
@@ -162,11 +141,10 @@ function App() {
     api
       .login(email, password)
       .then((data) => {
-        history.push('/movies');
-        setIsLoggedIn(true);
         setJwt(data);
         setApiResponse('')
-
+        tokenCheck()
+        history.push('/movies');
       })
       .catch((err => {
         setApiResponse("Что-то пошло не так")
@@ -176,21 +154,41 @@ function App() {
   }
 
 
-  useEffect(() => {
+  const tokenCheck = () => {
     const token = localStorage.getItem("jwt");
     if(token) {
-        api.getUserData(token)
-          .then((res) => {
-            if (res) {
-              setCurrentUser(res)
+      setIsAuthChecking(true)
+      api.getUserData(token)
+        .then((res) => {
+          if (res) {
+            setCurrentUser(res)
+            setIsLoggedIn(true);
+            history.push(location.pathname)
+          }
+        }).catch((err) => console.log(err))
+        .finally(() => setIsAuthChecking(false));
+      }
+  }
 
-              setIsLoggedIn(true);
-            }
-          }).catch((err) => console.log(err))
-          .finally(() => setIsAuthChecking(false));
 
-        
-        api.getBookmarkedMovies()
+  useEffect(() => {
+    const allMovies = JSON.parse(localStorage.getItem('movies'));
+    if (allMovies) {
+      setLocalStorageMovies(allMovies);
+    }
+
+    const localMovies = JSON.parse(localStorage.getItem('localStorageSavedMovies'))
+    if (localMovies) {
+      setLocalStorageSavedMovies(localMovies);
+    }
+
+    tokenCheck()
+  }, []);
+
+  useEffect(() => {
+    if (isLoggedIn && localStorageSavedMovies.length === 0) {
+      api
+        .getBookmarkedMovies()
           .then((bookmarkedMovies) => {
               setSavedMovies(bookmarkedMovies);
               localStorage.setItem('localStorageSavedMovies', JSON.stringify(bookmarkedMovies));
@@ -199,11 +197,15 @@ function App() {
               setSearchedMovies([])
           })
           .catch((err) => console.log(err))
-
-      }
+    } 
   }, [isLoggedIn]);
-
   
+  useEffect(() => {
+    setMoviesError(false);
+    setSearchedMovies([]);
+    setApiResponse(false);
+    setSavedMovies(localStorageSavedMovies);
+  }, [location])
 
   const handleUpdateUser = (name, email) => {
     setIsAuthChecking(true)
@@ -261,23 +263,25 @@ function App() {
           }
           </Route>
 
-          <ProtectedRoute isLoggedIn={isLoggedIn} path="/movies">
-
-              <Movies
-                onSearchQuerySubmit={handleSearchQuerySubmit}
-                isSearching={isSearching}
-                movies={searchedMovies}
-                moviesError={moviesError}
-                onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
-                onDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
-                setIsShortMoviesChecked={setIsShortMoviesChecked}
+          <ProtectedRoute 
+              isLoggedIn={isLoggedIn} 
+              path="/movies" exact
+              component={Movies}
+              onSearchQuerySubmit={handleSearchQuerySubmit}
+              isSearching={isSearching}
+              movies={searchedMovies}
+              moviesError={moviesError}
+              onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
+              onDeleteMovie={handleDeleteMovie}
+              savedMovies={savedMovies}
+              setIsShortMoviesChecked={setIsShortMoviesChecked}
               />
-          </ProtectedRoute>
 
-          <ProtectedRoute isLoggedIn={isLoggedIn} path="/saved-movies">
 
-            <SavedMovies
+          <ProtectedRoute 
+              isLoggedIn={isLoggedIn} 
+              path="/saved-movies"
+              component={SavedMovies} 
               onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
               isSearching={isSearching}
               movies={savedMovies}
@@ -286,17 +290,16 @@ function App() {
               savedMovies={savedMovies}
               setIsShortMoviesChecked={setIsShortMoviesChecked}
             />
-          </ProtectedRoute>
 
-          <ProtectedRoute isLoggedIn={isLoggedIn} path="/profile">
-  
-            <Profile
+          <ProtectedRoute 
+              isLoggedIn={isLoggedIn} 
+              path="/profile"
+              component={Profile}
               onLogout={handleLogout}
               onUpdateUser={handleUpdateUser}
               apiResponse={apiResponse}
               isAuthChecking={isAuthChecking}
             />
-          </ProtectedRoute>
 
           <Route path="/*">
             <PageNotFound />
