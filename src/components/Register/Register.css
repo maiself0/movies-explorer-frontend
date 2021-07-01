@@ -48,6 +48,9 @@
   padding: 15px;
 }
 
+.fieldset {
+  border: none;
+}
 .error {
   font-style: normal;
   font-weight: normal;
