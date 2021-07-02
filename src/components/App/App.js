@@ -153,6 +153,7 @@ function App() {
       .finally(() => setIsAuthChecking(false))
   }
 
+
   const tokenCheck = () => {
     const token = localStorage.getItem("jwt");
     if(token) {
@@ -168,6 +169,7 @@ function App() {
         .finally(() => setIsAuthChecking(false));
       }
   }
+
 
   useEffect(() => {
     const allMovies = JSON.parse(localStorage.getItem('movies'));
@@ -219,6 +221,7 @@ function App() {
       .finally(() => setIsAuthChecking(false))
 
   }
+
 
   const handleLogout = () => {
     localStorage.clear()
