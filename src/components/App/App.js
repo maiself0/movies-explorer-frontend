@@ -90,13 +90,11 @@ function App() {
     }
   };
 
-  const [searchedSavedMovies, setSearchedSavedMovies] = useState([])
 
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
     const searchedMovies = handleMoviesSearch(sortSavedMoviesOnShortMoviesChecked, searchQuery);
-    localStorage.setItem('localStorageSavedMoviesSearchQuery', JSON.stringify(searchedMovies));
-    setSearchedSavedMovies(searchedMovies);
+    setSavedMovies(searchedMovies);
   }
 
   const handleBookmarkMovieButtonClick = (movie) => {
@@ -192,11 +190,6 @@ function App() {
       setSearchedMovies(searchedMovies);
     }
 
-    const searchedSavedMovies = JSON.parse(localStorage.getItem('localStorageSavedMoviesSearchQuery'))
-    if (searchedSavedMovies) {
-      setSearchedSavedMovies(searchedSavedMovies);
-    }
-
   }, []);
 
   useEffect(() => {
@@ -241,7 +234,6 @@ function App() {
     setSavedMovies([])
     setLocalStorageMovies([])
     setLocalStorageSavedMovies([])
-    setSearchedSavedMovies([])
     setSearchedMovies([])
     history.push('/')
     setJwt("")
@@ -298,7 +290,7 @@ function App() {
               component={SavedMovies} 
               onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
               isSearching={isSearching}
-              movies={(searchedSavedMovies.length !== 0 || moviesError === 'Ничего не найдено')? searchedSavedMovies : savedMovies}
+              movies={savedMovies}
               moviesError={moviesError}
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
