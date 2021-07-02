@@ -175,8 +175,6 @@ function App() {
 
 
   useEffect(() => {
-    localStorage.setItem('isAuth', (true))
-
     tokenCheck()
     const allMovies = JSON.parse(localStorage.getItem('movies'));
     if (allMovies) {
