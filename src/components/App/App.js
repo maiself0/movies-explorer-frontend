@@ -147,6 +147,7 @@ function App() {
         setApiResponse('')
         tokenCheck()
         history.push('/movies');
+        localStorage.setItem('isAuth', (true))
       })
       .catch((err => {
         setApiResponse("Что-то пошло не так")
@@ -174,6 +175,8 @@ function App() {
 
 
   useEffect(() => {
+    localStorage.setItem('isAuth', (true))
+
     tokenCheck()
     const allMovies = JSON.parse(localStorage.getItem('movies'));
     if (allMovies) {
@@ -238,6 +241,7 @@ function App() {
     history.push('/')
     setJwt("")
     setIsLoggedIn(false)
+    localStorage.setItem('isAuth', (false))
   }
 
   return (

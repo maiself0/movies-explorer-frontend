@@ -41,7 +41,7 @@ const SearchForm = (props) => {
         {!isSearchQueryValid && <span className="search-form__error error">Нужно ввести ключевое слово</span>}
         </div>
         
-        <FilterCheckbox setIsShortMoviesChecked={props.setIsShortMoviesChecked}/>
+        <FilterCheckbox setIsShortMoviesChecked={props.setIsShortMoviesChecked} onSearchQuerySubmit={props.onSearchQuerySubmit} searchQuery={searchQuery}/>
       </form>
     </div>
   );
