@@ -39,7 +39,6 @@ function App() {
   
   const location = useLocation();
 
-
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
       return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
@@ -73,6 +72,7 @@ function App() {
           const allMovies = JSON.parse(localStorage.getItem('movies'));
           setLocalStorageMovies(allMovies);
           const searchedMovies = handleMoviesSearch(sortApiMoviesOnShortMoviesChecked, searchQuery);
+          localStorage.setItem('localStorageSearchedMovies', JSON.stringify(searchedMovies));
           setSearchedMovies(searchedMovies);
         })
         .catch((err) => {
@@ -84,15 +84,19 @@ function App() {
         .finally(() => setIsSearching(false));
     } else {
       const searchedMovies = handleMoviesSearch(sortMoviesOnShortMoviesChecked, searchQuery);
+      // localStorage.setItem('localStorageSearchedMovies', JSON.stringify(searchedMovies));
       setSearchedMovies(searchedMovies);
       setIsSearching(false);
     }
   };
 
+  const [searchedSavedMovies, setSearchedSavedMovies] = useState([])
+
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
     const searchedMovies = handleMoviesSearch(sortSavedMoviesOnShortMoviesChecked, searchQuery);
-    setSavedMovies(searchedMovies);
+    localStorage.setItem('localStorageSavedMoviesSearchQuery', JSON.stringify(searchedMovies));
+    setSearchedSavedMovies(searchedMovies);
   }
 
   const handleBookmarkMovieButtonClick = (movie) => {
@@ -172,6 +176,7 @@ function App() {
 
 
   useEffect(() => {
+    tokenCheck()
     const allMovies = JSON.parse(localStorage.getItem('movies'));
     if (allMovies) {
       setLocalStorageMovies(allMovies);
@@ -182,7 +187,16 @@ function App() {
       setLocalStorageSavedMovies(localMovies);
     }
 
-    tokenCheck()
+    const searchedMovies = JSON.parse(localStorage.getItem('localStorageSearchedMovies'))
+    if (searchedMovies) {
+      setSearchedMovies(searchedMovies);
+    }
+
+    const searchedSavedMovies = JSON.parse(localStorage.getItem('localStorageSavedMoviesSearchQuery'))
+    if (searchedSavedMovies) {
+      setSearchedSavedMovies(searchedSavedMovies);
+    }
+
   }, []);
 
   useEffect(() => {
@@ -202,7 +216,6 @@ function App() {
   
   useEffect(() => {
     setMoviesError(false);
-    setSearchedMovies([]);
     setApiResponse(false);
     setSavedMovies(localStorageSavedMovies);
   }, [location])
@@ -219,7 +232,6 @@ function App() {
         setApiResponse('изменить профиль не получилось')
       })
       .finally(() => setIsAuthChecking(false))
-
   }
 
 
@@ -229,6 +241,8 @@ function App() {
     setSavedMovies([])
     setLocalStorageMovies([])
     setLocalStorageSavedMovies([])
+    setSearchedSavedMovies([])
+    setSearchedMovies([])
     history.push('/')
     setJwt("")
     setIsLoggedIn(false)
@@ -284,7 +298,7 @@ function App() {
               component={SavedMovies} 
               onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
               isSearching={isSearching}
-              movies={savedMovies}
+              movies={(searchedSavedMovies.length !== 0 || moviesError === 'Ничего не найдено')? searchedSavedMovies : savedMovies}
               moviesError={moviesError}
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
