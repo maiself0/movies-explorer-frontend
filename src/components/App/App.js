@@ -84,7 +84,7 @@ function App() {
         .finally(() => setIsSearching(false));
     } else {
       const searchedMovies = handleMoviesSearch(sortMoviesOnShortMoviesChecked, searchQuery);
-      // localStorage.setItem('localStorageSearchedMovies', JSON.stringify(searchedMovies));
+      localStorage.setItem('localStorageSearchedMovies', JSON.stringify(searchedMovies));
       setSearchedMovies(searchedMovies);
       setIsSearching(false);
     }
