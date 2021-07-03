@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
@@ -16,6 +16,10 @@ const SearchForm = (props) => {
     props.onSearchQuerySubmit(searchQuery);
   }
 
+
+  useEffect(() => {
+    props.onSearchQuerySubmit(searchQuery);
+  }, [props.isShortMoviesChecked])
 
   return (
     <div className="search-form">

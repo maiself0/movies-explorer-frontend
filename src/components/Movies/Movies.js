@@ -10,6 +10,7 @@ const Movies = (props) => {
     <div className="movies">
       <Header />
       <SearchForm 
+        isShortMoviesChecked={props.isShortMoviesChecked}
         onSearchQuerySubmit={props.onSearchQuerySubmit} 
         setIsShortMoviesChecked={props.setIsShortMoviesChecked}
       />

@@ -23,7 +23,7 @@ const Footer = () => {
               </a>
             </li>
             <li className="footer__link-container">
-              <a className="footer__link" href="https://github.com">
+              <a className="footer__link" href="https://github.com/maiself0/movies-explorer-frontend">
                 Github
               </a>
             </li>

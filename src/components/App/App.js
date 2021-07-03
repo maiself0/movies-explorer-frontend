@@ -47,7 +47,7 @@ function App() {
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
-      return movie.nameRU.toLowerCase().includes(searchQuery.toLowerCase());
+      return movie?.nameRU.toLowerCase().includes(searchQuery?.toLowerCase());
     });
 
     if (searchedMovies.length === 0) {
@@ -61,9 +61,11 @@ function App() {
     return shortMovies;
   };
   const [isShortMoviesChecked, setIsShortMoviesChecked] = useState(false);
+
   const sortMoviesOnShortMoviesChecked = isShortMoviesChecked
     ? sortShortMovies(localStorageMovies)
     : localStorageMovies;
+
   const sortSavedMoviesOnShortMoviesChecked = isShortMoviesChecked
     ? sortShortMovies(localStorageSavedMovies)
     : localStorageSavedMovies;
@@ -326,6 +328,7 @@ function App() {
               onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
+              isShortMoviesChecked={isShortMoviesChecked}
               setIsShortMoviesChecked={setIsShortMoviesChecked}
             />
 
@@ -339,6 +342,7 @@ function App() {
               moviesError={moviesError}
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
+              isShortMoviesChecked={isShortMoviesChecked}
               setIsShortMoviesChecked={setIsShortMoviesChecked}
             />
 
