@@ -6,6 +6,13 @@
   padding: 20px 70px 15px 70px;
 }
 
+.movies-card-list__container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .movies-card-list__grid-container {
   display: grid;
   grid-template-columns: repeat(3, minmax(200px, 364px));
@@ -37,6 +44,11 @@
   opacity: 0.1;
   background: #6b5fdb50;
   cursor: pointer;
+}
+
+.movies-card-list__error {
+  color: red;
+  font-size: 50px;
 }
 
 @media all and (max-width: 800px) {

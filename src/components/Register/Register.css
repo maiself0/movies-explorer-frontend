@@ -23,9 +23,12 @@
 
 .register__inputs-containter {
   height: 267px;
+  display: flex;
+  flex-direction: column;
 }
 
 .register__label {
+  padding-top: 5px;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
@@ -34,7 +37,7 @@
 }
 
 .register__input {
-  margin: 10px 0 10px 0;
+  margin: 10px 0 5px 0;
   height: 46px;
   width: 100%;
   box-sizing: border-box;
@@ -50,8 +53,13 @@
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
-
+  height: 12px;
   color: #ff4062;
+}
+
+
+.api-error {
+  text-align: center;
 }
 
 .register__button-container {
@@ -110,6 +118,10 @@
   opacity: 0.5;
 }
 
+.disabled-button {
+  opacity: 0.4;
+}
+
 @media all and (max-width: 800px) {
   .register__container {
     padding: 230px 0;
@@ -144,5 +156,13 @@
   }
   .register__signin-link {
     font-size: 12px;
+  }
+  .error {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 8px;
+    line-height: 9px;
+  
+    color: #ff4062;
   }
 }

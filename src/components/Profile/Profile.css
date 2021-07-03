@@ -16,7 +16,6 @@
   font-size: 24px;
   line-height: 29px;
   /* identical to box height */
-
   text-align: center;
 }
 
@@ -25,7 +24,26 @@
   margin-top: 123px;
 }
 
+.profile__api-message {
+  font-weight: bolder;
+  text-align: center;
+  font-size: 27px;
+  line-height: 30px;
+  height: 30px;
+}
+
+.profile__response_error {
+  color: red;
+}
+
+.profile__response_success {
+  color: green;
+  background-color: none;
+}
+
+
 .profile__input-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -58,6 +76,7 @@
 
 .profile__input::placeholder {
   color: #000000;
+  opacity: 0.5;
 }
 
 .profile__buttons-container {
@@ -85,7 +104,12 @@
   color: #ff4062;
   font-weight: 500;
 }
-
+.profile__name-error,
+.profile__email-error {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
 @media all and (max-width: 800px) {
   .profile {
     padding-top: 235px;

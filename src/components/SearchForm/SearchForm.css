@@ -15,6 +15,10 @@
   padding-bottom: 3px;
 }
 
+.search-form__input-container:hover {
+  /* background-color: rgb(51, 15, 214); */
+}
+
 .search-form__icon {
   margin-top: 10px;
   margin-left: 7px;
@@ -31,6 +35,10 @@
   outline: none;
   border: none;
   height: 34px;
+}
+
+.search-form__input:focus ~ .search-form__button {
+  background-color: rgb(51, 15, 214);
 }
 
 .search-form__input::placeholder {
@@ -66,6 +74,14 @@
   opacity: 0.8;
 }
 
+.search-form__error-container {
+  display: flex;
+  justify-content: center;
+}
+.search-form__error {
+  margin-left: 10px;
+  opacity: 0.5;
+}
 
 @media all and (max-width: 800px) {
   .search-form {
@@ -80,12 +96,11 @@
   .search-form__icon {
     display: none;
   }
-  
+
   .search-form__input {
     margin-left: 0;
     outline: none;
     border: none;
- 
   }
   .search-form__input::placeholder {
     text-align: left;

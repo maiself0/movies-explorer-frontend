@@ -1,48 +1,112 @@
-import React from 'react'
-import './MoviesCardList.css'
-import MoviesCard from './MoviesCard/MoviesCard'
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import './MoviesCardList.css';
+import MoviesCard from './MoviesCard/MoviesCard';
+import Preloader from '../Preloader/Preloader';
 
-import image1 from '../../images/image1.png'
-import image2 from '../../images/image2.png'
-import image3 from '../../images/image3.png'
-import image4 from '../../images/image4.png'
-import image5 from '../../images/image5.png'
-import image6 from '../../images/image6.png'
-import image7 from '../../images/image7.png'
-import image8 from '../../images/image8.png'
-import image9 from '../../images/image9.png'
-import image10 from '../../images/image10.png'
-import image11 from '../../images/image11.png'
-import image12 from '../../images/image12.png'
+const MoviesCardList = (props) => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [numberOfMoviesShown, setNumberOfMoviesShown] = useState(() => {
+    const windowSize = window.innerWidth;
+    if (windowSize < 510) {
+      return 5;
+    } else if (windowSize < 800) {
+      return 8;
+    } else {
+      return 12;
+    }
+  });
+  
+  const [moviesShown, setMoviesShown] = useState([]);
+  const [numberOfMoviesToAdd, setNumberOfMoviesToAdd] = useState(0);
+  const [isMoreMoviesButtonActive, setIsMoreMoviesButtonActive] =
+    useState(false);
 
-const MoviesCardList = () => {
+  const location = useLocation();
+
+  const handleWindowResize = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  const countNumberOfMoviesShown = () => {
+    if (windowWidth >= 800) {
+      setNumberOfMoviesShown(12);
+      setNumberOfMoviesToAdd(3);
+    } else if (windowWidth < 800 && windowWidth > 510) {
+      setNumberOfMoviesShown(8);
+      setNumberOfMoviesToAdd(2);
+    } else {
+      setNumberOfMoviesShown(5);
+      setNumberOfMoviesToAdd(2);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    countNumberOfMoviesShown();
+  }, [windowWidth]);
+
+  useEffect(() => {
+    setMoviesShown(props.movies?.slice(0, numberOfMoviesShown));
+
+    props.movies?.length <= numberOfMoviesShown
+      ? setIsMoreMoviesButtonActive(false)
+      : setIsMoreMoviesButtonActive(true);
+  }, [props.movies]);
+
+  // кнопка ещё => показ новых карточек
+  const handleMoreButtonClick = () => {
+    setMoviesShown(
+      props.movies.slice(0, moviesShown.length + numberOfMoviesToAdd)
+    );
+
+    if (moviesShown.length >= props.movies.length - numberOfMoviesToAdd) {
+      setIsMoreMoviesButtonActive(false);
+    }
+  };
+
   return (
     <div className="movies-card-list">
       <div className="movies-card-list__container">
+        {props.isSearching && <Preloader />}
+        {props.moviesError && (
+          <span className="movies-card-list__error">{props.moviesError}</span>
+        )}
+
         <div className="movies-card-list__grid-container">
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image1}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image2}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image3}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image4}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image5}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image6}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image7}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image8}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image9}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image10}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image11}/>
-          <MoviesCard title="33 слова о дизайне" duration="1ч 47м" image={image12}/> 
-           
+          {moviesShown?.map((movie) => {
+            return (
+              <MoviesCard
+                movie={movie}
+                key={location.pathname === '/movies' ? movie.id : movie._id}
+                onBookmarkMovieButtonClick={props.onBookmarkMovieButtonClick}
+                onDeleteMovie={props.onDeleteMovie}
+                savedMovies={props.savedMovies}
+              />
+            );
+          })}
         </div>
 
         <div className="movies-card-list__button-more-container">
-          <button type="button" className="movie-card-list__button-more">Ещё</button>
+          {isMoreMoviesButtonActive && (
+            <button
+              type="button"
+              className="movie-card-list__button-more"
+              onClick={handleMoreButtonClick}
+            >
+              Ещё
+            </button>
+          )}
         </div>
-
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default MoviesCardList
+export default MoviesCardList;
