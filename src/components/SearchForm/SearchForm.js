@@ -18,7 +18,9 @@ const SearchForm = (props) => {
 
 
   useEffect(() => {
-    props.onSearchQuerySubmit(searchQuery);
+    if (searchQuery) {
+      props.onSearchQuerySubmit(searchQuery);
+    }
   }, [props.isShortMoviesChecked])
 
   return (
