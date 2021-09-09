@@ -15,7 +15,8 @@
 
 .movies-card-list__grid-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(271px, 1fr));
+  grid-template-columns: repeat(3, minmax(271px, 1fr));
+  align-items: stretch;
   grid-column-gap: 24px;
   grid-row-gap: 30px;
 }

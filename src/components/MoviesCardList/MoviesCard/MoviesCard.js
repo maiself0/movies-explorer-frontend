@@ -31,7 +31,7 @@ const MoviesCard = (props) => {
 
 
   const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
-  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.thumbnail 
+  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.image
 
   const minutesToHoursConverter = (duration) => {
     const hours = Math.floor(duration / 60);
