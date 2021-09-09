@@ -17,14 +17,14 @@
   height: 20px;
   position: relative;
   cursor: pointer;
-  background: rgb(201, 197, 197);
+  background: var(--secondary-color);
   border-radius: 30px;
   outline: none;
   transition: all 0.2s ease-in-out;
 }
 
 .filter-checkbox__input:checked {
-  background: #2be080;
+  background: #372be0;
 }
 
 .filter-checkbox__input:after {

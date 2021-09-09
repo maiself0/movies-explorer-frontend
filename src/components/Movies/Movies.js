@@ -12,7 +12,7 @@ const Movies = (props) => {
       <SearchForm 
         isShortMoviesChecked={props.isShortMoviesChecked}
         onSearchQuerySubmit={props.onSearchQuerySubmit} 
-        setIsShortMoviesChecked={props.setIsShortMoviesChecked}
+        onShortMoviesCheck={props.onShortMoviesCheck}
       />
 
       <MoviesCardList

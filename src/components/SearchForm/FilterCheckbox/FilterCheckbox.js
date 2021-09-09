@@ -3,11 +3,11 @@ import './FilterCheckbox.css';
 
 const FilterCheckbox = (props) => {
   const handleShortMovieCheckboxToggle = (e) => {
-    props.setIsShortMoviesChecked(e.target.checked);
+    props.onShortMoviesCheck(e.target.checked);
   }
   
   useEffect(() => {
-    props.setIsShortMoviesChecked(false)
+    props.onShortMoviesCheck(false)
   }, [])
 
   return (

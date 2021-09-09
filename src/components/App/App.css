@@ -1,4 +1,23 @@
+:root {
+  --primary-text-color: #ffffff;
+  --main-bg-color: #D7DAE5;
+  --secondary-color: #93bad4;
+  --secondary-color-main: #c2e0f3;
+  --main-color: #343c52;
+  --main-color-low-opacity: #9e9e9e96;
+  --error: #dd262f;
+}
+
+
 .App {
   font-family: 'Inter', Arial, sans-serif;
   min-height: 100vh;
+  height: 100%;
+  background-color: var(--main-bg-color);
+  background: linear-gradient(313deg, rgba(24,23,56,0.7791491596638656) 0%, rgba(125,143,206,1) 37%, rgba(127,200,238,1) 100%);
+  color: var(--main-color);
+}
+
+::-webkit-scrollbar {
+  width: 0;
 }

@@ -16,7 +16,6 @@ const SearchForm = (props) => {
     props.onSearchQuerySubmit(searchQuery);
   }
 
-
   useEffect(() => {
     if (searchQuery) {
       props.onSearchQuerySubmit(searchQuery);
@@ -24,7 +23,7 @@ const SearchForm = (props) => {
   }, [props.isShortMoviesChecked])
 
   return (
-    <div className="search-form">
+    <section className="search-form">
       <form className="search-form__container" onSubmit={handleMoviesApiQuery}>
         <div className="search-form__input-container">
           <div className="search-form__icon" />
@@ -36,6 +35,7 @@ const SearchForm = (props) => {
             placeholder="Фильм"
             value={searchQuery || ''}
             onChange={handleQueryChange}
+            autocomplete="off"
             required
           />
           <button type="submit" className="search-form__button">
@@ -47,9 +47,9 @@ const SearchForm = (props) => {
         {!isSearchQueryValid && <span className="search-form__error error">Нужно ввести ключевое слово</span>}
         </div>
         
-        <FilterCheckbox setIsShortMoviesChecked={props.setIsShortMoviesChecked} onSearchQuerySubmit={props.onSearchQuerySubmit} searchQuery={searchQuery}/>
+        <FilterCheckbox onShortMoviesCheck={props.onShortMoviesCheck} onSearchQuerySubmit={props.onSearchQuerySubmit} searchQuery={searchQuery}/>
       </form>
-    </div>
+    </section>
   );
 };
 

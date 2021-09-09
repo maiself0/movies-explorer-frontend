@@ -26,7 +26,7 @@ const AboutMe = () => {
 
             <ul className="about-me__links">
               <li><a  className="about-me__link" href="https://facebook.com">Facebook</a></li>
-              <li><a  className="about-me__link" href="https://github.com">Github</a></li>
+              <li><a  className="about-me__link" href="https://github.com/stbukhgolts">Github</a></li>
             </ul>
           </div>
 

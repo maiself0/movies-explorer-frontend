@@ -7,13 +7,13 @@ import Footer from '../Footer/Footer';
 
 const SavedMovies = (props) => {
   return (
-    <div>
+    <div className="saved-movies">
       <Header />
       <SearchForm 
         isShortMoviesChecked={props.isShortMoviesChecked}
 
         onSearchQuerySubmit={props.onSearchQuerySubmit}  
-        setIsShortMoviesChecked={props.setIsShortMoviesChecked}/>
+        onShortMoviesCheck={props.onShortMoviesCheck}/>
       <MoviesCardList 
         isSearching={props.isSearching}
         movies={props.movies} 

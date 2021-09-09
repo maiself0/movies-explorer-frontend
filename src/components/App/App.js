@@ -28,22 +28,8 @@ function App() {
   const [moviesError, setMoviesError] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
-  const [currentUser, setCurrentUser] = useState({
-    name: '',
-    email: '',
-  });
-  const [jwt, setJwt] = useState(localStorage.getItem('jwt'));
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const api = new Api({
-    url: 'https://api.bukhgolts.nomoredomains.club',
-    headers: {
-      'content-type': 'application/json',
-      authorization: `Bearer ${jwt}`,
-    },
-  });
 
-  const location = useLocation();
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const searchedMovies = movies.filter((movie) => {
@@ -60,7 +46,11 @@ function App() {
     const shortMovies = movies.filter((movie) => movie.duration <= 40);
     return shortMovies;
   };
-  const [isShortMoviesChecked, setIsShortMoviesChecked] = useState(false);
+  const [isShortMoviesChecked, setIsShortMoviesCheck] = useState(false);
+
+  const handleShortMoviesCheck = (e) => {
+    setIsShortMoviesCheck(e)
+  }
 
   const sortMoviesOnShortMoviesChecked = isShortMoviesChecked
     ? sortShortMovies(localStorageMovies)
@@ -151,6 +141,21 @@ function App() {
   const [apiResponse, setApiResponse] = useState('');
   const [isAuthChecking, setIsAuthChecking] = useState(false);
   const history = useHistory();
+  const [currentUser, setCurrentUser] = useState({
+    name: '',
+    email: '',
+  });
+  const [jwt, setJwt] = useState(localStorage.getItem('jwt'));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const location = useLocation();
+
+  const api = new Api({
+    url: 'https://api.bukhgolts.nomoredomains.club',
+    headers: {
+      'content-type': 'application/json',
+      authorization: `Bearer ${jwt}`,
+    },
+  });
 
   const handleRegister = ({ name, email, password }) => {
     setIsAuthChecking(true);
@@ -208,6 +213,7 @@ function App() {
   useEffect(() => {
     tokenCheck();
     const allMovies = JSON.parse(localStorage.getItem('movies'));
+
     if (allMovies) {
       setLocalStorageMovies(allMovies);
     }
@@ -329,7 +335,7 @@ function App() {
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
               isShortMoviesChecked={isShortMoviesChecked}
-              setIsShortMoviesChecked={setIsShortMoviesChecked}
+              onShortMoviesCheck={handleShortMoviesCheck}
             />
 
             <ProtectedRoute
@@ -343,7 +349,7 @@ function App() {
               onDeleteMovie={handleDeleteMovie}
               savedMovies={savedMovies}
               isShortMoviesChecked={isShortMoviesChecked}
-              setIsShortMoviesChecked={setIsShortMoviesChecked}
+              onShortMoviesCheck={handleShortMoviesCheck}
             />
 
             <ProtectedRoute

@@ -19,7 +19,6 @@
   font-weight: normal;
   font-size: 22px;
   line-height: 71px;
-  /* identical to box height */
   letter-spacing: -0.04em;
   border-bottom: 1px solid black;
 }
@@ -42,7 +41,7 @@
   background-color: #000000;
 }
 .grid-item-2 {
-  background-color: #f2f2f2;
+  background-color: var(--secondary-color);
 }
 
 .grid-item__text {
@@ -54,7 +53,7 @@
 }
 
 .grid-item__text-1 {
-  color: #ffffff;
+  color: var(--primary-text-color);
 }
 
 .grid-item__text-3,
@@ -65,7 +64,7 @@
   font-size: 14px;
   line-height: 17px;
   text-align: center;
-  color: #a0a0a0;
+  color: var(--main-color);
 }
 
 @media all and (max-width: 800px) {

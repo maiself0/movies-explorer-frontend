@@ -14,7 +14,7 @@ const MoviesCard = (props) => {
     description: props.movie.description || 'н.д.',
     image: `https://api.nomoreparties.co${props.movie.image.url}` || 'н.д.',
     trailer: props.movie.trailerLink,
-    thumbnail: `https://api.nomoreparties.co${props.movie.image?.formats?.thumbnail?.url}` || 'н.д.',
+    thumbnail: `https://api.nomoreparties.co${props.movie.image?.formats?.thumbnail.url}` || 'н.д.',
     movieId: props.movie.id,
     nameRU: props.movie.nameRU || 'н.д.',
     nameEN: props.movie.nameEN || 'н.д.',
@@ -31,7 +31,7 @@ const MoviesCard = (props) => {
 
 
   const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
-  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.formats.thumbnail.url}` : props.movie.thumbnail 
+  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.thumbnail 
 
   const minutesToHoursConverter = (duration) => {
     const hours = Math.floor(duration / 60);
@@ -74,7 +74,7 @@ const MoviesCard = (props) => {
           />
         </div>
 
-        <a href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer} rel="noreferrer" target="_blank" >
+        <a className="movies-card__image-container" href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer} rel="noreferrer" target="_blank" >
           <img
             className="movies-card__image"
             alt="кадр из фильма"
