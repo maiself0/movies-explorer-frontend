@@ -1,5 +1,5 @@
 .techs {
-  background: var(--secondary-color-main);
+  background: linear-gradient(29deg, rgba(203,247,255,1) 0%, rgba(164,249,246,0.7959558823529411) 20%, rgba(70,204,255,0.2189250700280112) 88%);
   height: 625px;
   display: flex;
   justify-content: center;
@@ -112,7 +112,6 @@
 
 @media all and (max-width: 500px) {
   .techs {
-    background: #ffffff;
     min-height: 651px;
   }
   .techs__heading {

@@ -37,12 +37,12 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 15px;
-  background: #f9f9f9;
+  background: #9da8ca;
   border-radius: 6px;
 }
 
 .movie-card-list__button-more:hover {
-  opacity: 0.1;
+  opacity: 0.5;
   background: #6b5fdb50;
   cursor: pointer;
 }
