@@ -33,7 +33,7 @@
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
-  color: #a0a0a0;
+  color: var(--font-black);
 }
 
 .register__input {
@@ -98,7 +98,7 @@
   margin-right: 6px;
   text-align: center;
 
-  color: #a0a0a0;
+  color: var(--font-black);
 }
 
 .register__signin-link {

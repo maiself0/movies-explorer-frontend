@@ -4,7 +4,7 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
 const SearchForm = (props) => {
   const [isSearchQueryValid, setIsSearchQueryValid] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(' ')
 
   const handleQueryChange = (e) => {
     setSearchQuery(e.target.value)
