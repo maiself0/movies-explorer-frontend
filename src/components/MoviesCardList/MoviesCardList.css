@@ -52,12 +52,12 @@
   font-size: 50px;
 }
 
-@media all and (max-width: 800px) {
+@media all and (max-width: 868px) {
   .movies-card-list {
     padding: 30px 13px 15px 13px;
   }
   .movies-card-list__grid-container {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 339px));
+    grid-template-columns: repeat(2, minmax(200px, 339px));
     grid-column-gap: 24px;
     grid-row-gap: 40px;
   }

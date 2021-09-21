@@ -35,7 +35,7 @@ const SearchForm = (props) => {
             placeholder="Фильм"
             value={searchQuery || ''}
             onChange={handleQueryChange}
-            autocomplete="off"
+            autoComplete="off"
             required
           />
           <button type="submit" className="search-form__button">
