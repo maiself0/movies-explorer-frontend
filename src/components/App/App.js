@@ -150,7 +150,7 @@ function App() {
   const location = useLocation();
 
   const api = new Api({
-    url: 'https://api.bukhgolts.nomoredomains.club',
+    url: process.env.REACT_APP_IP,
     headers: {
       'content-type': 'application/json',
       authorization: `Bearer ${jwt}`,
@@ -300,7 +300,7 @@ function App() {
 
             <Route path="/signup">
               {isLoggedIn ? (
-                <Redirect to="/" />
+                <Redirect to="/movies" />
               ) : (
                 <Register
                   onRegister={handleRegister}
@@ -312,7 +312,7 @@ function App() {
 
             <Route path="/signin">
               {isLoggedIn ? (
-                <Redirect to="/" />
+                <Redirect to="/movies" />
               ) : (
                 <Login
                   onLogin={handleLogin}
