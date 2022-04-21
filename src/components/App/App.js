@@ -28,10 +28,23 @@ function App() {
   const [moviesError, setMoviesError] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
+  const [isShortMoviesChecked, setIsShortMoviesCheck] = useState(false);
 
+  const sortShortMovies = (movies) => {
+    const shortMovies = movies.filter((movie) => movie.duration <= 40);
+    return shortMovies;
+  };
 
+  const sortMoviesOnShortMoviesChecked = isShortMoviesChecked
+    ? sortShortMovies(localStorageMovies)
+    : localStorageMovies;
+
+  const sortSavedMoviesOnShortMoviesChecked = isShortMoviesChecked
+    ? sortShortMovies(localStorageSavedMovies)
+    : localStorageSavedMovies;
 
   const handleMoviesSearch = (movies, searchQuery) => {
+    movies = sortMoviesOnShortMoviesChecked;
     const searchedMovies = movies.filter((movie) => {
       return movie?.nameRU.toLowerCase().includes(searchQuery?.toLowerCase());
     });
@@ -42,23 +55,9 @@ function App() {
     return searchedMovies;
   };
 
-  const sortShortMovies = (movies) => {
-    const shortMovies = movies.filter((movie) => movie.duration <= 40);
-    return shortMovies;
-  };
-  const [isShortMoviesChecked, setIsShortMoviesCheck] = useState(false);
-
   const handleShortMoviesCheck = (e) => {
     setIsShortMoviesCheck(e)
   }
-
-  const sortMoviesOnShortMoviesChecked = isShortMoviesChecked
-    ? sortShortMovies(localStorageMovies)
-    : localStorageMovies;
-
-  const sortSavedMoviesOnShortMoviesChecked = isShortMoviesChecked
-    ? sortShortMovies(localStorageSavedMovies)
-    : localStorageSavedMovies;
 
   const handleSearchQuerySubmit = (searchQuery) => {
     setIsSearching(true);
@@ -69,14 +68,10 @@ function App() {
       moviesApi
         .getMovies()
         .then((movies) => {
-          const sortApiMoviesOnShortMoviesChecked = isShortMoviesChecked
-            ? sortShortMovies(movies)
-            : movies;
           localStorage.setItem('movies', JSON.stringify(movies));
           const allMovies = JSON.parse(localStorage.getItem('movies'));
           setLocalStorageMovies(allMovies);
           const searchedMovies = handleMoviesSearch(
-            sortApiMoviesOnShortMoviesChecked,
             searchQuery
           );
           localStorage.setItem(
