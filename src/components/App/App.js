@@ -23,7 +23,6 @@ import Preloader from '../Preloader/Preloader';
 function App() {
   // фильмы
   const [isSearching, setIsSearching] = useState(false);
-  const [localStorageMovies, setLocalStorageMovies] = useState([]);
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [moviesError, setMoviesError] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
@@ -35,51 +34,56 @@ function App() {
     return shortMovies;
   };
 
-  const sortMoviesOnShortMoviesChecked = isShortMoviesChecked
-    ? sortShortMovies(localStorageMovies)
-    : localStorageMovies;
+  const sortMoviesOnShortMoviesChecked = (movies) => {
+    return isShortMoviesChecked
+    ? sortShortMovies(movies)
+    : movies;
+  } 
 
   const sortSavedMoviesOnShortMoviesChecked = isShortMoviesChecked
     ? sortShortMovies(localStorageSavedMovies)
     : localStorageSavedMovies;
 
   const handleMoviesSearch = (movies, searchQuery) => {
-    movies = sortMoviesOnShortMoviesChecked;
+    movies = sortMoviesOnShortMoviesChecked(movies);
+
     const searchedMovies = movies.filter((movie) => {
-      return movie?.nameRU.toLowerCase().includes(searchQuery?.toLowerCase());
+      return movie?.nameRU.toLowerCase().includes(searchQuery?.toLowerCase())
     });
 
     if (searchedMovies.length === 0) {
       setMoviesError('Ничего не найдено');
     }
+
     return searchedMovies;
   };
 
   const handleShortMoviesCheck = (e) => {
     setIsShortMoviesCheck(e)
+    localStorage.setItem('isShortMoviesChecked', e ? 1 : 0)
+
   }
 
   const handleSearchQuerySubmit = (searchQuery) => {
     setIsSearching(true);
     setMoviesError(false);
     setSearchedMovies([]);
+    localStorage.setItem('searchQuery', searchQuery)
 
-    if (localStorageMovies.length === 0) {
+    const localStorageMovies = JSON.parse(localStorage.getItem('movies'))
+
+    if (!localStorageMovies) {
       moviesApi
         .getMovies()
         .then((movies) => {
           localStorage.setItem('movies', JSON.stringify(movies));
-          const allMovies = JSON.parse(localStorage.getItem('movies'));
-          setLocalStorageMovies(allMovies);
           const searchedMovies = handleMoviesSearch(
+            movies,
             searchQuery
           );
-          localStorage.setItem(
-            'localStorageSearchedMovies',
-            JSON.stringify(searchedMovies)
-          );
           setSearchedMovies(searchedMovies);
-        })
+          })
+
         .catch((err) => {
           console.log(err);
           setMoviesError(
@@ -89,12 +93,8 @@ function App() {
         .finally(() => setIsSearching(false));
     } else {
       const searchedMovies = handleMoviesSearch(
-        sortMoviesOnShortMoviesChecked,
+        localStorageMovies,
         searchQuery
-      );
-      localStorage.setItem(
-        'localStorageSearchedMovies',
-        JSON.stringify(searchedMovies)
       );
       setSearchedMovies(searchedMovies);
       setIsSearching(false);
@@ -207,11 +207,11 @@ function App() {
 
   useEffect(() => {
     tokenCheck();
-    const allMovies = JSON.parse(localStorage.getItem('movies'));
+    // const allMovies = JSON.parse(localStorage.getItem('movies'));
 
-    if (allMovies) {
-      setLocalStorageMovies(allMovies);
-    }
+    // if (allMovies) {
+    //   setLocalStorageMovies(allMovies);
+    // }
 
     const localMovies = JSON.parse(
       localStorage.getItem('localStorageSavedMovies')
@@ -220,12 +220,15 @@ function App() {
       setLocalStorageSavedMovies(localMovies);
     }
 
-    const searchedMovies = JSON.parse(
-      localStorage.getItem('localStorageSearchedMovies')
-    );
-    if (searchedMovies) {
-      setSearchedMovies(searchedMovies);
-    }
+    // const searchedMovies = JSON.parse(
+    //   localStorage.getItem('localStorageSearchedMovies')
+    // );
+    // if (searchedMovies) {
+    //   setSearchedMovies(searchedMovies);
+    // }
+
+    setIsShortMoviesCheck(Boolean(+localStorage.getItem('isShortMoviesChecked')))
+
   }, []);
 
   useEffect(() => {
@@ -251,7 +254,7 @@ function App() {
   useEffect(() => {
     setMoviesError(false);
     setApiResponse(false);
-    setSavedMovies(localStorageSavedMovies);
+    // setSavedMovies(localStorageSavedMovies);
   }, [location]);
 
   const handleUpdateUser = (name, email) => {
@@ -273,7 +276,8 @@ function App() {
     localStorage.clear();
     setCurrentUser({});
     setSavedMovies([]);
-    setLocalStorageMovies([]);
+    // setLocalStorageMovies([]);
+    setIsShortMoviesCheck(false);
     setLocalStorageSavedMovies([]);
     setSearchedMovies([]);
     history.push('/');

@@ -4,7 +4,8 @@ import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
 const SearchForm = (props) => {
   const [isSearchQueryValid, setIsSearchQueryValid] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('')
+  const [searchQuery, setSearchQuery] = useState(localStorage.getItem('searchQuery')|| "")
+
 
   const handleQueryChange = (e) => {
     setSearchQuery(e.target.value)
@@ -19,8 +20,16 @@ const SearchForm = (props) => {
   useEffect(() => {
     if (searchQuery) {
       props.onSearchQuerySubmit(searchQuery);
+
     }
   }, [props.isShortMoviesChecked])
+
+  // useEffect(() => {
+  //   const searchQuery = localStorage.getItem('searchQuery')
+  //   setSearchQuery(searchQuery)
+  // }, [])
+
+  
 
   return (
     <section className="search-form">
@@ -47,7 +56,7 @@ const SearchForm = (props) => {
         {!isSearchQueryValid && <span className="search-form__error error">Нужно ввести ключевое слово</span>}
         </div>
         
-        <FilterCheckbox onShortMoviesCheck={props.onShortMoviesCheck} onSearchQuerySubmit={props.onSearchQuerySubmit} searchQuery={searchQuery}/>
+        <FilterCheckbox onShortMoviesCheck={props.onShortMoviesCheck} isShortMoviesChecked={props.isShortMoviesChecked} onSearchQuerySubmit={props.onSearchQuerySubmit} searchQuery={searchQuery}/>
       </form>
     </section>
   );
