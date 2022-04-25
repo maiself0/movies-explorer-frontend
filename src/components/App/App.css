@@ -17,6 +17,7 @@
   background-color: var(--main-bg-color);
   background: linear-gradient(313deg, rgba(24,23,56,0.7791491596638656) 0%, rgba(125,143,206,1) 37%, rgba(127,200,238,1) 100%);
   color: var(--main-color);
+
 }
 
 ::-webkit-scrollbar {

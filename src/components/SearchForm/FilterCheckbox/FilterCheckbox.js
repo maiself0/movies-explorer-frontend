@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+
 import './FilterCheckbox.css';
 
 const FilterCheckbox = (props) => {
@@ -12,6 +12,7 @@ const FilterCheckbox = (props) => {
         <input
           type="checkbox"
           name="checkbox"
+          defaultChecked={Boolean(+localStorage.getItem('isShortMoviesChecked'))}
           checked={props.isShortMoviesChecked}
           className="filter-checkbox__input"
           onChange={handleShortMovieCheckboxToggle}

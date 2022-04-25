@@ -28,7 +28,15 @@ const MoviesCardList = (props) => {
     setWindowWidth(window.innerWidth);
   };
 
-  const countNumberOfMoviesShown = () => {
+
+  useEffect(() => {
+    window.addEventListener('resize', handleWindowResize);
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  useEffect(() => {  const countNumberOfMoviesShown = () => {
     if (windowWidth >= 800) {
       setNumberOfMoviesShown(12);
       setNumberOfMoviesToAdd(3);
@@ -41,14 +49,6 @@ const MoviesCardList = (props) => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener('resize', handleWindowResize);
-    return () => {
-      window.removeEventListener('resize', handleWindowResize);
-    };
-  }, []);
-
-  useEffect(() => {
     countNumberOfMoviesShown();
   }, [windowWidth]);
 

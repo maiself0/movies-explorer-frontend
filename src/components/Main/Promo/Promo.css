@@ -10,7 +10,8 @@
   justify-content: center;
   align-items: center;
   border-radius: 10px;
-  background-color: var(--secondary-color);
+  background-color: var(--secondary-color);    
+  transition: all 0.3s linear;
 }
 .promo__header {
   margin: 0;
@@ -31,6 +32,7 @@
   .promo__container {
     padding-top: 15px;
     height: 820px;
+    transition: all 0.3s linear;
   }
   .promo__header {
     font-style: normal;

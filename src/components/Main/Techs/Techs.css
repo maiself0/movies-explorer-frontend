@@ -65,6 +65,7 @@
   margin: 0;
   padding: 0;
   list-style: none;
+
 }
 
 .techs__techs-name {
@@ -107,6 +108,7 @@
     font-size: 12px;
     line-height: 18px;
     margin: 20px 0 0 0;
+
   }
 }
 
@@ -137,5 +139,6 @@
     grid-template-columns: repeat(2, 84px);
     grid-template-rows: 57px;
     gap: 10px;
+
   }
 }
