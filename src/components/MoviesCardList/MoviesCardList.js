@@ -4,9 +4,14 @@ import './MoviesCardList.css';
 import MoviesCard from './MoviesCard/MoviesCard';
 import Preloader from '../Preloader/Preloader';
 
-const MoviesCardList = (props) => {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const [numberOfMoviesShown, setNumberOfMoviesShown] = useState(() => {
+const MoviesCardList = ({movies ,...props}) => {
+  const [moviesShown, setMoviesShown] = useState([]);
+  const [isMoreMoviesButtonActive, setIsMoreMoviesButtonActive] =
+    useState(false);
+
+  const location = useLocation();
+
+  let numberOfMoviesShown = (() => {
     const windowSize = window.innerWidth;
     if (windowSize < 510) {
       return 5;
@@ -15,61 +20,60 @@ const MoviesCardList = (props) => {
     } else {
       return 12;
     }
-  });
+  })();
   
-  const [moviesShown, setMoviesShown] = useState([]);
-  const [numberOfMoviesToAdd, setNumberOfMoviesToAdd] = useState(0);
-  const [isMoreMoviesButtonActive, setIsMoreMoviesButtonActive] =
-    useState(false);
 
-  const location = useLocation();
-
-  const handleWindowResize = () => {
-    setWindowWidth(window.innerWidth);
-  };
-
+  let numberOfMoviesToAdd = (() => {
+    const windowSize = window.innerWidth;
+    if (windowSize < 510) {
+      return 2;
+    } else if (windowSize < 800) {
+      return 2;
+    } else {
+      return 3;
+    }
+  })();
 
   useEffect(() => {
-    window.addEventListener('resize', handleWindowResize);
+    const countNumberOfMoviesShown = () => {
+      if (window.innerWidth >= 870) {
+        numberOfMoviesShown= (12);
+        numberOfMoviesToAdd = (3);
+      } else if (window.innerWidth < 870 && window.innerWidth > 510) {
+        numberOfMoviesShown= (8);
+        numberOfMoviesToAdd = (2);
+      } else {
+        numberOfMoviesShown= (5);
+        numberOfMoviesToAdd = (2);
+      }
+    };
+    
+    window.addEventListener('resize', countNumberOfMoviesShown);
     return () => {
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener('resize', countNumberOfMoviesShown);
     };
   }, []);
-
-  useEffect(() => {  const countNumberOfMoviesShown = () => {
-    if (windowWidth >= 800) {
-      setNumberOfMoviesShown(12);
-      setNumberOfMoviesToAdd(3);
-    } else if (windowWidth < 800 && windowWidth > 510) {
-      setNumberOfMoviesShown(8);
-      setNumberOfMoviesToAdd(2);
-    } else {
-      setNumberOfMoviesShown(5);
-      setNumberOfMoviesToAdd(2);
-    }
-  };
-
-    countNumberOfMoviesShown();
-  }, [windowWidth]);
-
+  
   useEffect(() => {
-    setMoviesShown(props.movies?.slice(0, numberOfMoviesShown));
+    setMoviesShown(movies?.slice(0, numberOfMoviesShown));
 
-    props.movies?.length <= numberOfMoviesShown
-      ? setIsMoreMoviesButtonActive(false)
-      : setIsMoreMoviesButtonActive(true);
-  }, [props.movies]);
+    movies?.length > numberOfMoviesShown
+      ? setIsMoreMoviesButtonActive(true)
+      : setIsMoreMoviesButtonActive(false);
+  }, [movies]);
 
   // кнопка ещё => показ новых карточек
   const handleMoreButtonClick = () => {
     setMoviesShown(
-      props.movies.slice(0, moviesShown.length + numberOfMoviesToAdd)
+      movies.slice(0, moviesShown.length + numberOfMoviesToAdd)
     );
+  };
 
-    if (moviesShown.length >= props.movies.length - numberOfMoviesToAdd) {
+  useEffect(()=>{
+    if (movies.length - moviesShown.length === 0) {
       setIsMoreMoviesButtonActive(false);
     }
-  };
+  }, [moviesShown])
 
   return (
     <div className="movies-card-list">
