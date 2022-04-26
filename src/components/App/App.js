@@ -23,7 +23,7 @@ import Preloader from '../Preloader/Preloader';
 function App() {
   // фильмы
   const [isSearching, setIsSearching] = useState(false);
-  const [isShortMoviesChecked, setIsShortMoviesCheck] = useState(false);
+  const [isShortMoviesChecked, setIsShortMoviesCheck] = useState(Boolean(+localStorage.getItem('isShortMoviesChecked')));
   const [moviesError, setMoviesError] = useState(false);
   const [searchedMovies, setSearchedMovies] = useState([]);
 
@@ -206,9 +206,6 @@ function App() {
       setLocalStorageSavedMovies(localMovies);
     }
 
-    setIsShortMoviesCheck(
-      Boolean(+localStorage.getItem('isShortMoviesChecked'))
-    );
 
   }, []);
 
