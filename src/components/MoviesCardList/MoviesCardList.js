@@ -60,7 +60,7 @@ const MoviesCardList = ({movies ,...props}) => {
     movies?.length > numberOfMoviesShown
       ? setIsMoreMoviesButtonActive(true)
       : setIsMoreMoviesButtonActive(false);
-  }, [movies]);
+  }, [movies, numberOfMoviesShown]);
 
   // кнопка ещё => показ новых карточек
   const handleMoreButtonClick = () => {
@@ -73,7 +73,7 @@ const MoviesCardList = ({movies ,...props}) => {
     if (movies.length - moviesShown.length === 0) {
       setIsMoreMoviesButtonActive(false);
     }
-  }, [moviesShown])
+  }, [movies, moviesShown])
 
   return (
     <div className="movies-card-list">

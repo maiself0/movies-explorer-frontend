@@ -16,7 +16,7 @@ import Profile from '../Profile/Profile';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import * as moviesApi from '../../utils/MoviesApi';
 import Api from '../../utils/MainApi';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
 
@@ -30,17 +30,20 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
 
+
   const handleShortMovieCheckboxToggle = (e) => {
     setIsShortMoviesCheck(e);
     localStorage.setItem('isShortMoviesChecked', e ? 1 : 0);
   };
 
-  const sortShortMovies = (movies) => {
-    const shortMovies = movies.filter((movie) => movie.duration <= 40);
-    return shortMovies;
-  };
 
   const handleMoviesSearch = (movies, searchQuery) => {
+
+    const sortShortMovies = (movies) => {
+      const shortMovies = movies.filter((movie) => movie.duration <= 40);
+      return shortMovies;
+    };
+  
     movies = isShortMoviesChecked ? sortShortMovies(movies) : movies;
 
     const searchedMovies = movies.filter((movie) => {
@@ -88,14 +91,10 @@ function App() {
     }
   };
 
-  const sortSavedMoviesOnShortMoviesChecked = isShortMoviesChecked
-    ? sortShortMovies(localStorageSavedMovies)
-    : localStorageSavedMovies;
-
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
     const searchedMovies = handleMoviesSearch(
-      sortSavedMoviesOnShortMoviesChecked,
+      localStorageSavedMovies,
       searchQuery
     );
     setSavedMovies(searchedMovies);
@@ -131,17 +130,17 @@ function App() {
     name: '',
     email: '',
   });
-  const [jwt, setJwt] = useState(localStorage.getItem('jwt'));
+  // const [jwt, setJwt] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const location = useLocation();
 
-  const api = new Api({
+  const api = useMemo(()=> new Api({
     url: process.env.REACT_APP_IP,
     headers: {
       'content-type': 'application/json',
-      authorization: `Bearer ${jwt}`,
-    },
-  });
+      authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    }
+  }),[])
 
   const handleRegister = ({ name, email, password }) => {
     setIsAuthChecking(true);
@@ -163,13 +162,20 @@ function App() {
     setIsAuthChecking(true);
     api
       .login(email, password)
-      .then((data) => {
-        setJwt(data);
-        setApiResponse('');
-        tokenCheck();
-        history.push('/movies');
-        localStorage.setItem('isAuth', true);
-      })
+      .then((token) => {
+        // setJwt(data);
+        
+        api.getUserData(token)
+          .then((res) => {
+            if (res) {
+              setCurrentUser(res);
+              setIsLoggedIn(true);
+              setApiResponse('');
+              history.push('/movies');
+              localStorage.setItem('isAuth', true);
+            }
+          }
+      )})
       .catch((err) => {
         setApiResponse('Что-то пошло не так');
         localStorage.setItem('isAuth', false);
@@ -178,25 +184,27 @@ function App() {
       .finally(() => setIsAuthChecking(false));
   };
 
-  const tokenCheck = () => {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      setIsAuthChecking(true);
-      api
-        .getUserData(token)
-        .then((res) => {
-          if (res) {
-            setCurrentUser(res);
-            setIsLoggedIn(true);
-            history.push(location.pathname);
-          }
-        })
-        .catch((err) => console.log(err))
-        .finally(() => setIsAuthChecking(false));
-    }
-  };
+
 
   useEffect(() => {
+    const tokenCheck = () => {
+      const token = localStorage.getItem('jwt');
+      if (token) {
+        setIsAuthChecking(true);
+        api
+          .getUserData(token)
+          .then((res) => {
+            if (res) {
+              setCurrentUser(res);
+              setIsLoggedIn(true);
+              // history.push(location.pathname);
+            }
+          })
+          .catch((err) => console.log(err))
+          .finally(() => setIsAuthChecking(false));
+      }
+    }
+
     tokenCheck();
 
     const localMovies = JSON.parse(
@@ -227,7 +235,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-  }, [isLoggedIn]);
+  }, [api, isLoggedIn, localStorageSavedMovies ]);
 
   useEffect(() => {
     setMoviesError(false);
@@ -258,7 +266,6 @@ function App() {
     setLocalStorageSavedMovies([]);
     setSearchedMovies([]);
     history.push('/');
-    setJwt('');
     setIsLoggedIn(false);
     localStorage.setItem('isAuth', false);
   };

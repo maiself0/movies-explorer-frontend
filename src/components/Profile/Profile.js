@@ -29,7 +29,7 @@ const Profile = ({ onLogout, onUpdateUser, apiResponse, isAuthChecking }) => {
     } else {
       setAreInitialValuesDifferent(true);
     }
-  }, [handleChange]);
+  }, [currentUser, values, handleChange]);
 
 
     return (

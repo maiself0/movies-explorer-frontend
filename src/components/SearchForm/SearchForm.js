@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SearchForm.css';
-import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 import { useLocation } from 'react-router-dom';
+import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
 const SearchForm = ({
   isShortMoviesChecked,
@@ -13,7 +13,7 @@ const SearchForm = ({
   const [searchQuery, setSearchQuery] = useState(() =>
     location.pathname === '/saved-movies'
       ? ''
-      : localStorage.getItem('searchQuery')
+      : localStorage.getItem('searchQuery') || ''
   );
 
   const handleQueryChange = (e) => {
@@ -64,12 +64,7 @@ const SearchForm = ({
           )}
         </div>
 
-        <FilterCheckbox
-          onShortMoviesCheck={props.onShortMoviesCheck}
-          isShortMoviesChecked={props.isShortMoviesChecked}
-          onSearchQuerySubmit={onSearchQuerySubmit}
-          searchQuery={searchQuery}
-        />
+        <FilterCheckbox onShortMoviesCheck={props.onShortMoviesCheck} isShortMoviesChecked={props.isShortMoviesChecked}/>
       </form>
     </section>
   );

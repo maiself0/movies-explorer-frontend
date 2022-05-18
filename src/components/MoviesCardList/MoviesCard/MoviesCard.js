@@ -30,30 +30,30 @@ const MoviesCard = (props) => {
   }, [savedMovie])
 
 
-  const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
-  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.image
-
+  
   const minutesToHoursConverter = (duration) => {
     const hours = Math.floor(duration / 60);
     const minutes = duration % 60;
     return `${hours > 0 ? hours + "ч " : ""}${minutes}м`;
   };
-
+  
   const handleBookmarkButtonClick = () => {
     props.onBookmarkMovieButtonClick(movie);
     setIsBookmarked(true);
   }
-
+  
   const handleActiveBookmarkButtonClick = () => {
-      setIsBookmarked(false);
-      props.onDeleteMovie(savedMovie._id)    
+    setIsBookmarked(false);
+    props.onDeleteMovie(savedMovie._id)    
   }
-
+  
   const handleDeleteMovieButtonClick = () => {
     props.onDeleteMovie(props.movie._id)
     setIsBookmarked(false);
   }
-
+  
+  const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
+  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.image
   const toggleBookmark = isBookmarked ? handleActiveBookmarkButtonClick : handleBookmarkButtonClick
   const chooseDeleteOrBookmarkButtonClick = location.pathname === '/movies' ? toggleBookmark : handleDeleteMovieButtonClick
 
