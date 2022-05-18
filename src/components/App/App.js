@@ -163,19 +163,17 @@ function App() {
     api
       .login(email, password)
       .then((token) => {
-        // setJwt(data);
-        
         api.getUserData(token)
           .then((res) => {
             if (res) {
               setCurrentUser(res);
               setIsLoggedIn(true);
               setApiResponse('');
-              history.push('/movies');
               localStorage.setItem('isAuth', true);
             }
-          }
-      )})
+          })
+          .then(() => history.push('/movies'))
+        })
       .catch((err) => {
         setApiResponse('Что-то пошло не так');
         localStorage.setItem('isAuth', false);
@@ -197,7 +195,6 @@ function App() {
             if (res) {
               setCurrentUser(res);
               setIsLoggedIn(true);
-              // history.push(location.pathname);
             }
           })
           .catch((err) => console.log(err))
@@ -207,15 +204,19 @@ function App() {
 
     tokenCheck();
 
-    const localMovies = JSON.parse(
-      localStorage.getItem('localStorageSavedMovies')
-    );
-    if (localMovies) {
-      setLocalStorageSavedMovies(localMovies);
-    }
 
 
-  }, []);
+  }, [api]);
+
+useEffect(() => {
+  const localMovies = JSON.parse(
+    localStorage.getItem('localStorageSavedMovies')
+  );
+  if (localMovies) {
+    setLocalStorageSavedMovies(localMovies);
+  }
+
+})
 
   useEffect(() => {
     if (isLoggedIn && localStorageSavedMovies.length === 0) {

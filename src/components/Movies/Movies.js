@@ -4,7 +4,7 @@ import Header from '../Header/Header';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Footer from '../Footer/Footer';
-// import FilterCheckbox from '../SearchForm/FilterCheckbox/FilterCheckbox';
+
 
 const Movies = (props) => {
   return (
