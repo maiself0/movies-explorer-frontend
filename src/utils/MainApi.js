@@ -56,8 +56,8 @@ class Api {
     .then(onError)
   };
 
-  login(email, password) {
-    return fetch(`${this._url}/signin`, {
+  async login(email, password) {
+    return await fetch(`${this._url}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -75,8 +75,8 @@ class Api {
       });
   };
 
-  getUserData(token) {
-    return fetch(`${this._url}/users/me`, {
+  async getUserData(token) {
+    return await fetch(`${this._url}/users/me`, {
         method: 'GET',
         headers: {
           "content-type": "application/json",
