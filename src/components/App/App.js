@@ -30,7 +30,7 @@ function App() {
   const [searchedMovies, setSearchedMovies] = useState([]);
 
   const [savedMovies, setSavedMovies] = useState([]);
-  const [localStorageSavedMovies, setLocalStorageSavedMovies] = useState([]);
+
 
   const handleShortMovieCheckboxToggle = (e) => {
     setIsShortMoviesCheck(e);
@@ -93,7 +93,7 @@ function App() {
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
     const searchedMovies = handleMoviesSearch(
-      localStorageSavedMovies,
+      savedMovies,
       searchQuery
     );
     setSavedMovies(searchedMovies);
@@ -104,7 +104,6 @@ function App() {
       .addMovie(movie)
       .then((addedMovie) => {
         setSavedMovies([...savedMovies, addedMovie]);
-        setLocalStorageSavedMovies([...localStorageSavedMovies, addedMovie]);
       })
       .catch((err) => console.log(err));
   };
@@ -117,7 +116,6 @@ function App() {
           (deletedMovie) => deletedMovie._id !== movieId
         );
         setSavedMovies(newSavedMovies);
-        setLocalStorageSavedMovies(newSavedMovies);
       })
       .catch((err) => console.log(err));
   };
@@ -207,38 +205,29 @@ function App() {
   }, [api]);
 
   useEffect(() => {
-    const localMovies = JSON.parse(
-      localStorage.getItem('localStorageSavedMovies')
-    );
-    if (localMovies) {
-      setLocalStorageSavedMovies(localMovies);
+    if (isLoggedIn && location.pathname === '/saved-movies' && savedMovies.length === 0) {
+      async function getBookmarkedMovies() {
+        try {
+          let bookmarkedMovies =  await api.getBookmarkedMovies()
+          if (bookmarkedMovies) {
+            setSavedMovies(bookmarkedMovies);         
+            setSearchedMovies([]);
+          }
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      getBookmarkedMovies()
     }
-  }, []);
+  }, [api, isLoggedIn, location, savedMovies]);
 
-  useEffect(() => {
-    if (isLoggedIn && localStorageSavedMovies.length === 0) {
-      api
-        .getBookmarkedMovies()
-        .then((bookmarkedMovies) => {
-          setSavedMovies(bookmarkedMovies);
-          localStorage.setItem(
-            'localStorageSavedMovies',
-            JSON.stringify(bookmarkedMovies)
-          );
-          const localMovies = JSON.parse(
-            localStorage.getItem('localStorageSavedMovies')
-          );
-          setLocalStorageSavedMovies(localMovies);
-          setSearchedMovies([]);
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [api, isLoggedIn, localStorageSavedMovies]);
 
   useEffect(() => {
     setMoviesError(false);
     setApiResponse(false);
-    // setSavedMovies(localStorageSavedMovies);
+    if (location.pathname === '/saved-movies') {
+      setSearchedMovies([])
+    }
   }, [location]);
 
   const handleUpdateUser = (name, email) => {
@@ -261,7 +250,6 @@ function App() {
     setCurrentUser({});
     setSavedMovies([]);
     setIsShortMoviesCheck(false);
-    setLocalStorageSavedMovies([]);
     setSearchedMovies([]);
     history.push('/');
     setIsLoggedIn(false);

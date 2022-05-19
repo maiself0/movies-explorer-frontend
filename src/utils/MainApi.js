@@ -11,15 +11,15 @@ class Api {
     this._headers = config.headers;
   }
 
-  getBookmarkedMovies() {
-    return fetch(`${this._url}/movies`, {
+  async getBookmarkedMovies() {
+    return await fetch(`${this._url}/movies/`, {
       method: 'GET',
       headers: this._headers
     }).then(onError)
   }
 
   addMovie(movie) {
-    return fetch(`${this._url}/movies`, {
+    return fetch(`${this._url}/movies/`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
