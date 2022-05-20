@@ -92,7 +92,6 @@ const MoviesCardList = ({movies ,...props}) => {
                 key={location.pathname === '/movies' ? movie.id : movie._id}
                 onBookmarkMovieButtonClick={props.onBookmarkMovieButtonClick}
                 onDeleteMovie={props.onDeleteMovie}
-                savedMovies={props.savedMovies}
                 movieButtonCss={location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'}
                 imageSourceCss={location.pathname === '/movies' ? `https://api.nomoreparties.co${movie.image.url}` : movie.image}
               />

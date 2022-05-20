@@ -2,25 +2,25 @@ import React, { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom'
 
-const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
+const MoviesCard = ({movieButtonCss, imageSourceCss, movie, ...props}) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const location = useLocation();
 
-  const movie = {
-    country : props.movie.country || 'н.д.',
-    director: props.movie.director || 'н.д.',
-    duration: props.movie.duration || 0,
-    year: props.movie.year || 'н.д.',
-    description: props.movie.description || 'н.д.',
-    image: `https://api.nomoreparties.co${props.movie.image.url}` || 'н.д.',
-    trailer: props.movie.trailerLink,
-    thumbnail: `https://api.nomoreparties.co${props.movie.image?.formats?.thumbnail.url}` || 'н.д.',
-    movieId: props.movie.id,
-    nameRU: props.movie.nameRU || 'н.д.',
-    nameEN: props.movie.nameEN || 'н.д.',
+  const movieCard = {
+    country : movie.country || 'н.д.',
+    director: movie.director || 'н.д.',
+    duration: movie.duration || 0,
+    year: movie.year || 'н.д.',
+    description: movie.description || 'н.д.',
+    image: `https://api.nomoreparties.co${movie.image.url}` || 'н.д.',
+    trailer: movie.trailerLink,
+    thumbnail: `https://api.nomoreparties.co${movie.image?.formats?.thumbnail.url}` || 'н.д.',
+    movieId: movie.id,
+    nameRU: movie.nameRU || 'н.д.',
+    nameEN: movie.nameEN || 'н.д.',
 }
   const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'))
-  const savedMovie = savedMovies?.find((movie) => movie.movieId === props.movie.id)
+  const savedMovie = savedMovies?.find((movie) => movie.movieId === movie.id)
 
   useEffect(() => {
       if(savedMovie) {
@@ -38,7 +38,7 @@ const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
   };
   
   const handleBookmarkButtonClick = () => {
-    props.onBookmarkMovieButtonClick(movie);
+    props.onBookmarkMovieButtonClick(movieCard);
     setIsBookmarked(true);
   }
   
@@ -48,7 +48,7 @@ const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
   }
   
   const handleDeleteMovieButtonClick = () => {
-    props.onDeleteMovie(props.movie._id)
+    props.onDeleteMovie(movie._id)
     setIsBookmarked(false);
   }
   
@@ -62,8 +62,8 @@ const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
       
         <div className="movies-card__header-container">
           <div className="movies-card__header-text-container">
-            <h2 className="movies-card__header">{props.movie.nameRU}</h2>
-            <p className="movies-card__duration">{minutesToHoursConverter(props.movie.duration)}</p>
+            <h2 className="movies-card__header">{movie.nameRU}</h2>
+            <p className="movies-card__duration">{minutesToHoursConverter(movie.duration)}</p>
           </div>
           <button 
             type="button"
@@ -73,7 +73,7 @@ const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
           />
         </div>
 
-        <a className="movies-card__image-container" href={props.movie.trailerLink ? props.movie.trailerLink : props.movie.trailer} rel="noreferrer" target="_blank" >
+        <a className="movies-card__image-container" href={movie.trailerLink ? movie.trailerLink : movie.trailer} rel="noreferrer" target="_blank" >
           <img
             className="movies-card__image"
             alt="кадр из фильма"

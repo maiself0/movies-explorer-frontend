@@ -39,7 +39,6 @@ function App() {
     localStorage.setItem('isShortMoviesChecked', e ? 1 : 0);
   };
 
-
   const handleMoviesSearch = (movies, searchQuery) => {
     const sortShortMovies = (movies) => {
       const shortMovies = movies.filter((movie) => movie.duration <= 40);
@@ -95,7 +94,7 @@ function App() {
 
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
-    const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'))
+    const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'));
     const searchedMovies = handleMoviesSearch(savedMovies, searchQuery);
     setSavedMovies(searchedMovies);
   };
@@ -105,7 +104,10 @@ function App() {
       .addMovie(movie)
       .then((addedMovie) => {
         setSavedMovies([...savedMovies, addedMovie]);
-        localStorage.setItem('bookmarkedMovies', JSON.stringify([...savedMovies, addedMovie]));
+        localStorage.setItem(
+          'bookmarkedMovies',
+          JSON.stringify([...savedMovies, addedMovie])
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -118,8 +120,10 @@ function App() {
           (deletedMovie) => deletedMovie._id !== movieId
         );
         setSavedMovies(newSavedMovies);
-        localStorage.setItem('bookmarkedMovies', JSON.stringify(newSavedMovies));
-
+        localStorage.setItem(
+          'bookmarkedMovies',
+          JSON.stringify(newSavedMovies)
+        );
       })
       .catch((err) => console.log(err));
   };
@@ -207,27 +211,21 @@ function App() {
   }, [api]);
 
   useEffect(() => {
-    if (isShortMoviesChecked === true && location.pathname === '/saved-movies') {
-      setSavedMovies(savedMovies.filter((movie) => movie.duration <= 40))
-    } 
-    if (isShortMoviesChecked === false && location.pathname === '/saved-movies') {
-      setSavedMovies(JSON.parse(localStorage.getItem('bookmarkedMovies')))
-    }
-  }, [isShortMoviesChecked, location.pathname])
-
-  useEffect(() => {
-    if (
-      isLoggedIn &&
-      location.pathname === '/saved-movies'
-    ) {
+    if (isLoggedIn && location.pathname === '/saved-movies') {
       async function getBookmarkedMovies() {
         try {
           let bookmarkedMovies = await api.getBookmarkedMovies();
           if (bookmarkedMovies) {
-            isShortMoviesChecked ? setSavedMovies(bookmarkedMovies.filter(movie=> movie.duration <40)):setSavedMovies(bookmarkedMovies);
-            localStorage.setItem('bookmarkedMovies', JSON.stringify(bookmarkedMovies));
+            isShortMoviesChecked
+              ? setSavedMovies(
+                  bookmarkedMovies.filter((movie) => movie.duration < 40)
+                )
+              : setSavedMovies(bookmarkedMovies);
+            localStorage.setItem(
+              'bookmarkedMovies',
+              JSON.stringify(bookmarkedMovies)
+            );
           }
-
         } catch (e) {
           console.log(e);
         }
@@ -314,6 +312,7 @@ function App() {
               <SearchForm
                 isShortMoviesChecked={isShortMoviesChecked}
                 onSearchQuerySubmit={handleSearchQuerySubmit}
+                savedMovies={savedMovies}
               >
                 <FilterCheckbox
                   onShortMoviesCheck={handleShortMovieCheckboxToggle}
@@ -327,11 +326,8 @@ function App() {
                 movies={searchedMovies}
                 onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
                 onDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
               />
             </ProtectedRoute>
-
-
 
             <ProtectedRoute
               isLoggedIn={isLoggedIn}
@@ -341,6 +337,7 @@ function App() {
               <SearchForm
                 isShortMoviesChecked={isShortMoviesChecked}
                 onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
+                savedMovies={savedMovies}
               >
                 <FilterCheckbox
                   onShortMoviesCheck={handleShortMovieCheckboxToggle}
@@ -353,7 +350,6 @@ function App() {
                 moviesError={moviesError}
                 movies={savedMovies}
                 onDeleteMovie={handleDeleteMovie}
-                savedMovies={savedMovies}
               />
             </ProtectedRoute>
 

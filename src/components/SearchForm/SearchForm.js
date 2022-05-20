@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import './SearchForm.css';
 import { useLocation } from 'react-router-dom';
 
-
 const SearchForm = ({
   isShortMoviesChecked,
   onSearchQuerySubmit,
+  savedMovies,
   ...props
 }) => {
   const location = useLocation();
@@ -27,10 +27,13 @@ const SearchForm = ({
   };
 
   useEffect(() => {
-    if (searchQuery && location.pathname === '/movies') {
+    if ((location.pathname === '/movies' && searchQuery) || location.pathname === '/saved-movies') {
       onSearchQuerySubmit(searchQuery);
     }
-  }, [isShortMoviesChecked]);
+
+  }, [isShortMoviesChecked
+    // , savedMovies
+  ]);
 
   return (
     <section className="search-form">
