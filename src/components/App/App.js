@@ -19,6 +19,9 @@ import Api from '../../utils/MainApi';
 import { useEffect, useMemo, useState } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import FilterCheckbox from '../SearchForm/FilterCheckbox/FilterCheckbox';
 
 function App() {
   // фильмы
@@ -31,11 +34,11 @@ function App() {
 
   const [savedMovies, setSavedMovies] = useState([]);
 
-
   const handleShortMovieCheckboxToggle = (e) => {
     setIsShortMoviesCheck(e);
     localStorage.setItem('isShortMoviesChecked', e ? 1 : 0);
   };
+
 
   const handleMoviesSearch = (movies, searchQuery) => {
     const sortShortMovies = (movies) => {
@@ -92,10 +95,8 @@ function App() {
 
   const handleSavedMoviesSearchQuerySubmit = (searchQuery) => {
     setMoviesError(false);
-    const searchedMovies = handleMoviesSearch(
-      savedMovies,
-      searchQuery
-    );
+    const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'))
+    const searchedMovies = handleMoviesSearch(savedMovies, searchQuery);
     setSavedMovies(searchedMovies);
   };
 
@@ -104,6 +105,7 @@ function App() {
       .addMovie(movie)
       .then((addedMovie) => {
         setSavedMovies([...savedMovies, addedMovie]);
+        localStorage.setItem('bookmarkedMovies', JSON.stringify([...savedMovies, addedMovie]));
       })
       .catch((err) => console.log(err));
   };
@@ -116,6 +118,8 @@ function App() {
           (deletedMovie) => deletedMovie._id !== movieId
         );
         setSavedMovies(newSavedMovies);
+        localStorage.setItem('bookmarkedMovies', JSON.stringify(newSavedMovies));
+
       })
       .catch((err) => console.log(err));
   };
@@ -170,9 +174,8 @@ function App() {
         setIsLoggedIn(true);
         setApiResponse('');
         localStorage.setItem('isAuth', true);
-        history.push('/movies')
+        history.push('/movies');
       }
-
     } catch (e) {
       setApiResponse('Что-то пошло не так');
       console.log(e);
@@ -182,51 +185,62 @@ function App() {
   }
 
   useEffect(() => {
-    async function tokenCheck () {
+    async function tokenCheck() {
       const token = localStorage.getItem('jwt');
       if (token) {
         setIsAuthChecking(true);
         try {
-          let res = await api.getUserData(token)
+          let res = await api.getUserData(token);
           if (res) {
             setCurrentUser(res);
             setIsLoggedIn(true);
           }
-        
         } catch (e) {
-          console.log(e)
+          console.log(e);
         } finally {
-          setIsAuthChecking(false)
+          setIsAuthChecking(false);
         }
       }
-    };
+    }
 
     tokenCheck();
   }, [api]);
 
   useEffect(() => {
-    if (isLoggedIn && location.pathname === '/saved-movies' && savedMovies.length === 0) {
+    if (isShortMoviesChecked === true && location.pathname === '/saved-movies') {
+      setSavedMovies(savedMovies.filter((movie) => movie.duration <= 40))
+    } 
+    if (isShortMoviesChecked === false && location.pathname === '/saved-movies') {
+      setSavedMovies(JSON.parse(localStorage.getItem('bookmarkedMovies')))
+    }
+  }, [isShortMoviesChecked, location.pathname])
+
+  useEffect(() => {
+    if (
+      isLoggedIn &&
+      location.pathname === '/saved-movies'
+    ) {
       async function getBookmarkedMovies() {
         try {
-          let bookmarkedMovies =  await api.getBookmarkedMovies()
+          let bookmarkedMovies = await api.getBookmarkedMovies();
           if (bookmarkedMovies) {
-            setSavedMovies(bookmarkedMovies);         
-            setSearchedMovies([]);
+            isShortMoviesChecked ? setSavedMovies(bookmarkedMovies.filter(movie=> movie.duration <40)):setSavedMovies(bookmarkedMovies);
+            localStorage.setItem('bookmarkedMovies', JSON.stringify(bookmarkedMovies));
           }
+
         } catch (e) {
-          console.log(e)
+          console.log(e);
         }
       }
-      getBookmarkedMovies()
+      getBookmarkedMovies();
     }
-  }, [api, isLoggedIn, location, savedMovies]);
-
+  }, [api, isLoggedIn, location]);
 
   useEffect(() => {
     setMoviesError(false);
     setApiResponse(false);
     if (location.pathname === '/saved-movies') {
-      setSearchedMovies([])
+      setSearchedMovies([]);
     }
   }, [location]);
 
@@ -296,30 +310,52 @@ function App() {
               path="/movies"
               exact
               component={Movies}
-              onSearchQuerySubmit={handleSearchQuerySubmit}
-              isSearching={isSearching}
-              moviesError={moviesError}
-              isShortMoviesChecked={isShortMoviesChecked}
-              onShortMoviesCheck={handleShortMovieCheckboxToggle}
-              movies={searchedMovies}
-              onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
-              onDeleteMovie={handleDeleteMovie}
-              savedMovies={savedMovies}
-            />
+            >
+              <SearchForm
+                isShortMoviesChecked={isShortMoviesChecked}
+                onSearchQuerySubmit={handleSearchQuerySubmit}
+              >
+                <FilterCheckbox
+                  onShortMoviesCheck={handleShortMovieCheckboxToggle}
+                  isShortMoviesChecked={isShortMoviesChecked}
+                />
+              </SearchForm>
+
+              <MoviesCardList
+                isSearching={isSearching}
+                moviesError={moviesError}
+                movies={searchedMovies}
+                onBookmarkMovieButtonClick={handleBookmarkMovieButtonClick}
+                onDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+              />
+            </ProtectedRoute>
+
+
 
             <ProtectedRoute
               isLoggedIn={isLoggedIn}
               path="/saved-movies"
               component={SavedMovies}
-              onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
-              isSearching={isSearching}
-              movies={savedMovies}
-              moviesError={moviesError}
-              onDeleteMovie={handleDeleteMovie}
-              savedMovies={savedMovies}
-              isShortMoviesChecked={isShortMoviesChecked}
-              onShortMoviesCheck={handleShortMovieCheckboxToggle}
-            />
+            >
+              <SearchForm
+                isShortMoviesChecked={isShortMoviesChecked}
+                onSearchQuerySubmit={handleSavedMoviesSearchQuerySubmit}
+              >
+                <FilterCheckbox
+                  onShortMoviesCheck={handleShortMovieCheckboxToggle}
+                  isShortMoviesChecked={isShortMoviesChecked}
+                />
+              </SearchForm>
+
+              <MoviesCardList
+                isSearching={isSearching}
+                moviesError={moviesError}
+                movies={savedMovies}
+                onDeleteMovie={handleDeleteMovie}
+                savedMovies={savedMovies}
+              />
+            </ProtectedRoute>
 
             <ProtectedRoute
               isLoggedIn={isLoggedIn}

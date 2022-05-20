@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './SearchForm.css';
 import { useLocation } from 'react-router-dom';
-import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
+
 
 const SearchForm = ({
   isShortMoviesChecked,
@@ -27,7 +27,7 @@ const SearchForm = ({
   };
 
   useEffect(() => {
-    if (searchQuery) {
+    if (searchQuery && location.pathname === '/movies') {
       onSearchQuerySubmit(searchQuery);
     }
   }, [isShortMoviesChecked]);
@@ -64,7 +64,7 @@ const SearchForm = ({
           )}
         </div>
 
-        <FilterCheckbox onShortMoviesCheck={props.onShortMoviesCheck} isShortMoviesChecked={props.isShortMoviesChecked}/>
+        {props.children}
       </form>
     </section>
   );

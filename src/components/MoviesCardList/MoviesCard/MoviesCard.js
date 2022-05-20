@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './MoviesCard.css';
 import { useLocation } from 'react-router-dom'
 
-const MoviesCard = (props) => {
+const MoviesCard = ({movieButtonCss, imageSourceCss, ...props}) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const location = useLocation();
 
@@ -19,8 +19,8 @@ const MoviesCard = (props) => {
     nameRU: props.movie.nameRU || 'н.д.',
     nameEN: props.movie.nameEN || 'н.д.',
 }
-
-  const savedMovie = props.savedMovies?.find((movie) => movie.movieId === props.movie.id)
+  const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'))
+  const savedMovie = savedMovies?.find((movie) => movie.movieId === props.movie.id)
 
   useEffect(() => {
       if(savedMovie) {
@@ -52,8 +52,7 @@ const MoviesCard = (props) => {
     setIsBookmarked(false);
   }
   
-  const movieButton = location.pathname === '/movies' ? 'movies-card__bookmark-button_type_bookmark' : 'movies-card__bookmark-button_type_delete'
-  const imageSource = location.pathname === '/movies' ? `https://api.nomoreparties.co${props.movie.image.url}` : props.movie.image
+
   const toggleBookmark = isBookmarked ? handleActiveBookmarkButtonClick : handleBookmarkButtonClick
   const chooseDeleteOrBookmarkButtonClick = location.pathname === '/movies' ? toggleBookmark : handleDeleteMovieButtonClick
 
@@ -69,7 +68,7 @@ const MoviesCard = (props) => {
           <button 
             type="button"
             onClick={chooseDeleteOrBookmarkButtonClick} 
-            className={`movies-card__bookmark-button ${movieButton} ${isBookmarked ? 'movies-card__bookmark-button_active' : ''}`} 
+            className={`movies-card__bookmark-button ${movieButtonCss} ${isBookmarked ? 'movies-card__bookmark-button_active' : ''}`} 
 
           />
         </div>
@@ -78,7 +77,7 @@ const MoviesCard = (props) => {
           <img
             className="movies-card__image"
             alt="кадр из фильма"
-            src={imageSource}
+            src={imageSourceCss}
           />
         </a>
       </div>
