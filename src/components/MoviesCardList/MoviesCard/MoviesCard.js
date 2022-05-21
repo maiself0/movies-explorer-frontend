@@ -20,7 +20,8 @@ const MoviesCard = ({movieButtonCss, imageSourceCss, movie, ...props}) => {
     nameEN: movie.nameEN || 'н.д.',
 }
   const savedMovies = JSON.parse(localStorage.getItem('bookmarkedMovies'))
-  const savedMovie = savedMovies?.find((movie) => movie.movieId === movie.id)
+  const savedMovie = savedMovies?.find((movie) => movie.movieId === movieCard.movieId)
+
 
   useEffect(() => {
       if(savedMovie) {

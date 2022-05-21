@@ -211,7 +211,7 @@ function App() {
   }, [api]);
 
   useEffect(() => {
-    if (isLoggedIn && location.pathname === '/saved-movies') {
+    if (isLoggedIn && location.pathname === '/saved-movies' || location.pathname === '/movies') {
       async function getBookmarkedMovies() {
         try {
           let bookmarkedMovies = await api.getBookmarkedMovies();

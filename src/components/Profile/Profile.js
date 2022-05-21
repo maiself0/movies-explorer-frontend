@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import './Profile.css';
 import Header from '../Header/Header';
-import useFormValidation from '../../hooks/useFormValidation';
+import useFormWithValidationForProfile from '../../hooks/useFormValidationForProfile';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import Preloader from '../Preloader/Preloader';
 
 const Profile = ({ onLogout, onUpdateUser, apiResponse, isAuthChecking }) => {
-  const { values, handleChange, errors, isValid } = useFormValidation();
   const currentUser = React.useContext(CurrentUserContext);
+  const { values, handleChange, errors, isValid } = useFormWithValidationForProfile();
 
+  
   const handleProfileChangeSubmit = (e) => {
     e.preventDefault();
     onUpdateUser(values.name, values.email);
@@ -29,7 +30,7 @@ const Profile = ({ onLogout, onUpdateUser, apiResponse, isAuthChecking }) => {
     } else {
       setAreInitialValuesDifferent(true);
     }
-  }, [currentUser, values, handleChange]);
+  }, [currentUser, values]);
 
 
     return (
@@ -61,7 +62,7 @@ const Profile = ({ onLogout, onUpdateUser, apiResponse, isAuthChecking }) => {
                   name="name"
                   placeholder={currentUser.name}
                   className="profile__input"
-                  value={values.name || ''}
+                  value={values.name}
                   pattern="[а-яА-Яa-zA-ZёË\- ]+"
                   onChange={handleChange}
                   required
@@ -80,7 +81,7 @@ const Profile = ({ onLogout, onUpdateUser, apiResponse, isAuthChecking }) => {
                   type="email"
                   placeholder={currentUser.email}
                   className="profile__input"
-                  value={values.email || ''}
+                  value={values.email}
                   onChange={handleChange}
                   required
                 ></input>

@@ -27,7 +27,7 @@ const Navigation = ({ isLoggedIn }) => {
     );
   } else {
     return (
-      <nav className={`navigation ${isMenuOpened===true ? "navigation_hamburger_clicked" : ""}`}>
+      <nav className={`navigation ${isMenuOpened===true ? "navigation_hamburger_clicked" : ""}`} onClick={handleHamburgerClick}>
 
         <div className={`navigation__hamburger ${isMenuOpened===true ? 'navigation__hamburger_hamburger_clicked' : '' }`} onClick={handleHamburgerClick}/> 
 
